@@ -1,0 +1,261 @@
+{
+  "type": "workflow_collections",
+  "data": [
+    {
+      "uuid": "4d896a64-3d79-4d6d-aefd-52f85ef787a0",
+      "@type": "WorkflowCollection",
+      "workflows": [
+        {
+          "@type": "Workflow",
+          "uuid": "4a4fa6ff-8f9e-41d6-bb3c-0be7c8da2c1a",
+          "collection": "/api/3/workflow_collections/4d896a64-3d79-4d6d-aefd-52f85ef787a0",
+          "steps": [
+            {
+              "uuid": "8f3dc5bf-54f3-43a6-a837-b315137fdede",
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "6c224918-b6b8-48c2-95c0-1baddfd1ce06",
+                "title": "ANY.RUN: Get History",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "91242b89-caf8-4766-82df-c6bae0b5292c",
+              "@type": "WorkflowStep",
+              "name": "Get History",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "ANY.RUN",
+                "config": "''",
+                "params": {
+                  "team": "",
+                  "skip": "0",
+                  "limit": ""
+                },
+                "version": "1.0.0",
+                "connector": "anyrun",
+                "operation": "get_history",
+                "operationTitle": "Get History",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "triggerLimit": null,
+          "description": "Get analysis history from ANY.RUN server based on input parameters that you have specified.",
+          "name": "Get History",
+          "tag": "#ANY.RUN",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/8f3dc5bf-54f3-43a6-a837-b315137fdede",
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "40779224-2d6d-46fe-b5e1-1f2bd2dfbeea",
+              "label": null,
+              "isExecuted": false,
+              "name": "Alerts -> Get History",
+              "sourceStep": "/api/3/workflow_steps/8f3dc5bf-54f3-43a6-a837-b315137fdede",
+              "targetStep": "/api/3/workflow_steps/91242b89-caf8-4766-82df-c6bae0b5292c"
+            }
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "uuid": "cb4c5e2e-a731-496d-b514-26f24cdc4566",
+          "collection": "/api/3/workflow_collections/4d896a64-3d79-4d6d-aefd-52f85ef787a0",
+          "steps": [
+            {
+              "uuid": "1efbfbe9-8e71-4005-bcf8-9cee5e8c681d",
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "70174438-411b-4883-91c4-bff37ff151d8",
+                "title": "ANY.RUN: Get Report",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "71a68229-89c7-41f9-b556-85964a803462",
+              "@type": "WorkflowStep",
+              "name": "Get Report",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "ANY.RUN",
+                "config": "''",
+                "params": {
+                  "task_uuid": "0cf223f2-530e-4a50-b68f-563045268648"
+                },
+                "version": "1.0.0",
+                "connector": "anyrun",
+                "operation": "get_report",
+                "operationTitle": "Get Report",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "triggerLimit": null,
+          "description": "Get report of task ID generated from submitted analysis of ANY.RUN server based on input parameters that you have specified.",
+          "name": "Get Report",
+          "tag": "#ANY.RUN",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/1efbfbe9-8e71-4005-bcf8-9cee5e8c681d",
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "3ab93fd4-29ff-4f2b-8bbb-15690371f2bb",
+              "label": null,
+              "isExecuted": false,
+              "name": "Alerts -> Get Report",
+              "sourceStep": "/api/3/workflow_steps/1efbfbe9-8e71-4005-bcf8-9cee5e8c681d",
+              "targetStep": "/api/3/workflow_steps/71a68229-89c7-41f9-b556-85964a803462"
+            }
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "uuid": "ef1a3b7c-4e44-41f7-bed9-978866c3ee07",
+          "collection": "/api/3/workflow_collections/4d896a64-3d79-4d6d-aefd-52f85ef787a0",
+          "steps": [
+            {
+              "uuid": "a5b7576d-90b7-4cfe-ad11-34d4b44aec0c",
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "route": "fb5e0871-5383-424b-8712-5a2bfdd37eff",
+                "title": "ANY.RUN: Run Analysis",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
+            },
+            {
+              "uuid": "c70f957d-3e9b-46cb-879d-80a76e57a31f",
+              "@type": "WorkflowStep",
+              "name": "Run Analysis",
+              "description": null,
+              "status": null,
+              "arguments": {
+                "name": "ANY.RUN",
+                "config": "''",
+                "params": {
+                  "env_os": "windows",
+                  "run_by": [
+                    "Environment",
+                    "Options"
+                  ],
+                  "env_type": "Complete",
+                  "env_bitness": 32,
+                  "env_version": 7,
+                  "opt_timeout": 60,
+                  "opt_network_geo": "",
+                  "opt_network_tor": false,
+                  "opt_network_mitm": false,
+                  "opt_privacy_type": "",
+                  "obj_ext_startfolder": "",
+                  "opt_network_connect": true,
+                  "opt_network_fakenet": false,
+                  "opt_kernel_heavyevasion": true
+                },
+                "version": "1.0.0",
+                "connector": "anyrun",
+                "operation": "run_analysis",
+                "operationTitle": "Run Analysis",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
+            }
+          ],
+          "triggerLimit": null,
+          "description": "Run new analysis in ANY.RUN server based on input parameters that you have specified.",
+          "name": "Run Analysis",
+          "tag": "#ANY.RUN",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/a5b7576d-90b7-4cfe-ad11-34d4b44aec0c",
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "46e449d3-d885-42d0-bff1-1d6773877f36",
+              "label": null,
+              "isExecuted": false,
+              "name": "Alerts -> Run Analysis",
+              "sourceStep": "/api/3/workflow_steps/a5b7576d-90b7-4cfe-ad11-34d4b44aec0c",
+              "targetStep": "/api/3/workflow_steps/c70f957d-3e9b-46cb-879d-80a76e57a31f"
+            }
+          ]
+        }
+      ],
+      "name": "Sample - ANY.RUN - 1.0.0",
+      "description": "ANY.RUN connector performs actions like get history, get report, and run new analysis.",
+      "visible": true,
+      "image": null
+    }
+  ]
+}
