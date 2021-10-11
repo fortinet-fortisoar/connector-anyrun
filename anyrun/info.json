@@ -1,0 +1,774 @@
+{
+  "name": "anyrun",
+  "label": "ANY.RUN",
+  "description": "ANY.RUN connector performs actions like get history, get report, and run new analysis.",
+  "publisher": "Community",
+  "cs_approved": false,
+  "cs_compatible": true,
+  "version": "1.0.0",
+  "category": "Forensics & Malware Analysis",
+  "icon_small_name": "small.png",
+  "icon_large_name": "medium.png",
+  "help_online": "",
+  "configuration": {
+    "fields": [
+      {
+        "title": "Server Address",
+        "name": "server",
+        "required": true,
+        "editable": true,
+        "visible": true,
+        "type": "text",
+        "value": "https://api.any.run",
+        "description": "FQDN of the ANY.RUN server to which you will connect and perform automated operations."
+      },
+      {
+        "title": "Username",
+        "name": "user",
+        "required": true,
+        "editable": true,
+        "visible": true,
+        "type": "text",
+        "description": "Username to access the ANY.RUN endpoint."
+      },
+      {
+        "title": "Password",
+        "name": "password",
+        "required": true,
+        "editable": true,
+        "visible": true,
+        "type": "password",
+        "description": "Password to access the ANY.RUN endpoint."
+      },
+      {
+        "title": "Verify SSL",
+        "name": "verify_ssl",
+        "required": false,
+        "visible": true,
+        "editable": true,
+        "type": "checkbox",
+        "value": true,
+        "description": "Specifies whether the SSL certificate for the server is to be verified or not.By default, this option is set as True."
+      }
+    ]
+  },
+  "operations": [
+    {
+      "operation": "get_history",
+      "title": "Get History",
+      "description": "Get analysis history from ANY.RUN server based on input parameters that you have specified.",
+      "category": "investigation",
+      "annotation": "get_history",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Team",
+          "name": "team",
+          "visible": true,
+          "required": false,
+          "editable": true,
+          "type": "checkbox",
+          "tooltip": "Leave this field blank to get your history or specify to get team history. Default value: false",
+          "description": "Leave this field blank to get your history or specify to get team history. Default value: false"
+        },
+        {
+          "title": "Skip",
+          "name": "skip",
+          "visible": true,
+          "required": false,
+          "editable": true,
+          "type": "text",
+          "value": "0",
+          "tooltip": "The number of result to skip. Default value \"0\"",
+          "description": "The number of result to skip. Default value \"0\""
+        },
+        {
+          "title": "Limit",
+          "name": "limit",
+          "visible": true,
+          "required": false,
+          "editable": true,
+          "type": "text",
+          "tooltip": "The number of result to retrieve. Size range: 1-100 Default value: 25",
+          "description": "Limit the history of the retrived to the number of results. Default value: 25. Size range: 1-100"
+        }
+      ],
+      "output_schema": {
+        "error": "",
+        "data": {
+          "tasks": [
+            {
+              "verdict": "",
+              "name": "",
+              "related": "",
+              "pcap": "",
+              "file": "",
+              "json": "",
+              "misp": "",
+              "tags": [],
+              "date": "",
+              "hashes": {
+                "ssdeep": "",
+                "head_hash": "",
+                "sha256": "",
+                "sha1": "",
+                "md5": ""
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get_report",
+      "title": "Get Report",
+      "description": "Get report of task ID generated from submitted analysis of ANY.RUN server based on input parameters that you have specified.",
+      "category": "investigation",
+      "annotation": "get_report",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Task ID",
+          "name": "task_uuid",
+          "visible": true,
+          "required": true,
+          "editable": true,
+          "type": "text",
+          "tooltip": "UUID of task",
+          "description": "Specify UUID of task generated from submitted analysis."
+        }
+      ],
+      "output_schema": {
+        "error": "",
+        "data": {
+          "analysis": {
+            "uuid": "",
+            "permanentUrl": "",
+            "reports": {
+              "IOC": "",
+              "MISP": "",
+              "HTML": "",
+              "graph": ""
+            },
+            "sandbox": {
+              "name": "",
+              "plan": {
+                "name": ""
+              }
+            },
+            "duration": "",
+            "creation": "",
+            "creationText": "",
+            "tags": [],
+            "options": {
+              "timeout": "",
+              "additionalTime": "",
+              "fakeNet": "",
+              "heavyEvasion": "",
+              "mitm": "",
+              "tor": {
+                "used": "",
+                "geo": ""
+              },
+              "presentation": "",
+              "video": "",
+              "hideSource": "",
+              "network": "",
+              "privacy": "",
+              "privateSample": "",
+              "automatization": {
+                "uac": ""
+              }
+            },
+            "scores": {
+              "verdict": {
+                "score": "",
+                "threatLevel": "",
+                "threatLevelText": ""
+              },
+              "specs": {
+                "injects": "",
+                "autostart": "",
+                "cpuOverrun": "",
+                "crashedApps": "",
+                "crashedTask": "",
+                "debugOutput": "",
+                "executableDropped": "",
+                "exploitable": "",
+                "lowAccess": "",
+                "memOverrun": "",
+                "multiprocessing": "",
+                "networkLoader": "",
+                "networkThreats": "",
+                "rebooted": "",
+                "serviceLauncher": "",
+                "spam": "",
+                "staticDetections": "",
+                "stealing": "",
+                "suspStruct": "",
+                "torUsed": "",
+                "privEscalation": "",
+                "notStarted": ""
+              }
+            },
+            "content": {
+              "mainObject": {
+                "type": "",
+                "permanentUrl": "",
+                "filename": "",
+                "hashes": {
+                  "md5": "",
+                  "sha1": "",
+                  "sha256": "",
+                  "ssdeep": ""
+                },
+                "info": {
+                  "ext": "",
+                  "file": "",
+                  "mime": "",
+                  "exif": {
+                    "ZIP": {
+                      "ZipRequiredVersion": "",
+                      "ZipBitFlag": "",
+                      "ZipCompression": "",
+                      "ZipModifyDate": "",
+                      "ZipCRC": "",
+                      "ZipCompressedSize": "",
+                      "ZipUncompressedSize": "",
+                      "ZipFileName": ""
+                    }
+                  },
+                  "trid": [
+                    {
+                      "procent": "",
+                      "extension": "",
+                      "filetype": ""
+                    }
+                  ]
+                }
+              },
+              "video": {
+                "present": ""
+              },
+              "pcap": {
+                "present": "",
+                "permanentUrl": ""
+              },
+              "screenshot": [
+                {
+                  "uuid": "",
+                  "time": "",
+                  "permanentUrl": "",
+                  "thumbnailUrl": ""
+                }
+              ]
+            }
+          },
+          "environments": {
+            "os": {
+              "title": "",
+              "build": "",
+              "product": "",
+              "variant": "",
+              "productType": "",
+              "major": "",
+              "servicePack": "",
+              "softSet": "",
+              "bitness": ""
+            },
+            "internetExplorer": {
+              "version": "",
+              "kbnum": ""
+            },
+            "software": [
+              {
+                "title": "",
+                "version": ""
+              }
+            ],
+            "hotfixes": [
+              {
+                "title": ""
+              }
+            ]
+          },
+          "processes": [
+            {
+              "pid": "",
+              "ppid": "",
+              "uuid": "",
+              "image": "",
+              "commandLine": "",
+              "fileName": "",
+              "fileType": "",
+              "mainProcess": "",
+              "times": {
+                "start": "",
+                "monitoringSince": ""
+              },
+              "versionInfo": {
+                "company": "",
+                "description": "",
+                "version": ""
+              },
+              "context": {
+                "rebootNumber": "",
+                "integrityLevel": "",
+                "userName": ""
+              },
+              "scores": {
+                "verdict": {
+                  "score": "",
+                  "threatLevel": "",
+                  "threatLevelText": ""
+                },
+                "monitoringReason": "",
+                "dropped": "",
+                "injected": "",
+                "loadsSusp": "",
+                "specs": {
+                  "autoStart": "",
+                  "crashedApps": "",
+                  "debugOutput": "",
+                  "executableDropped": "",
+                  "exploitable": "",
+                  "injects": "",
+                  "knownThreat": "",
+                  "lowAccess": "",
+                  "network": "",
+                  "networkLoader": "",
+                  "stealing": "",
+                  "privEscalation": ""
+                }
+              },
+              "status": "",
+              "modules": [
+                {
+                  "time": "",
+                  "image": ""
+                }
+              ]
+            }
+          ],
+          "modified": {
+            "files": [
+              {
+                "time": "",
+                "filename": "",
+                "size": "",
+                "type": "",
+                "threatLevel": "",
+                "process": "",
+                "info": {
+                  "file": ""
+                },
+                "hashes": {
+                  "head_hash": "",
+                  "md5": "",
+                  "sha1": "",
+                  "sha256": "",
+                  "ssdeep": ""
+                },
+                "permanentUrl": ""
+              }
+            ],
+            "registry": [
+              {
+                "key": "",
+                "name": "",
+                "value": "",
+                "operation": "",
+                "process": "",
+                "time": ""
+              }
+            ]
+          },
+          "network": {
+            "dnsRequests": [],
+            "httpRequests": [],
+            "connections": [],
+            "threats": []
+          },
+          "debugStrings": [],
+          "incidents": [
+            {
+              "threatLevel": "",
+              "title": "",
+              "desc": "",
+              "source": "",
+              "firstSeen": "",
+              "count": "",
+              "mitre": [],
+              "events": [],
+              "process": ""
+            }
+          ],
+          "counters": {
+            "processes": {
+              "total": "",
+              "monitored": "",
+              "suspicious": "",
+              "malicious": ""
+            },
+            "network": {
+              "http": "",
+              "connections": "",
+              "dns": "",
+              "threats": ""
+            },
+            "files": {
+              "unknown": 3,
+              "text": 1,
+              "suspicious": 0,
+              "malicious": 0
+            },
+            "registry": {
+              "total": "",
+              "read": "",
+              "write": "",
+              "delete": ""
+            }
+          },
+          "mitre": [
+            {
+              "id": "",
+              "phases": [],
+              "name": ""
+            }
+          ],
+          "status": ""
+        }
+      }
+    },
+    {
+      "operation": "run_analysis",
+      "title": "Run Analysis",
+      "description": "Run new analysis in ANY.RUN server based on input parameters that you have specified.",
+      "category": "investigation",
+      "annotation": "run_analysis",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Run By",
+          "name": "run_by",
+          "visible": true,
+          "required": true,
+          "editable": true,
+          "type": "multiselect",
+          "options": [
+            "Environment",
+            "Options",
+            "Object"
+          ],
+          "description": "Perform action in ANY.RUN run new analysis. You can choose from the following options: Environment, Options or Object.",
+          "onchange": {
+            "Environment": [
+              {
+                "title": "Operation System",
+                "name": "env_os",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "text",
+                "tooltip": "Default value: windows Allowed values: \"windows\"",
+                "value": "windows",
+                "description": "Specify Operation System. Default value: windows Allowed values: \"windows\""
+              },
+              {
+                "title": "Bitness",
+                "name": "env_bitness",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "text",
+                "value": "32",
+                "tooltip": "Bitness of Operation System. Default value: 32 Allowed values: 32, 64",
+                "description": "Specify Bitness of Operation System. Default value: 32 Allowed values: 32, 64"
+              },
+              {
+                "title": "ENV Version",
+                "name": "env_version",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "text",
+                "tooltip": "Version of OS",
+                "value": "7",
+                "description": "Version of OS.Default value: 7 Allowed values: \"vista\", \"7\", \"8.1\", \"10\" "
+              },
+              {
+                "title": "ENV Type",
+                "name": "env_type",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "Clean",
+                  "Office",
+                  "Complete"
+                ],
+                "value": "Complete",
+                "tooltip": "Environment preset type",
+                "description": "Environment preset type. Default value: Complete Options You can choose from the following options: \"Clean\", \"Office\", \"Complete\""
+              }
+            ],
+            "Options": [
+              {
+                "title": "Network Connection State",
+                "name": "opt_network_connect",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": true,
+                "description": "Network connection state. Default value: true."
+              },
+              {
+                "title": "FakeNet Feature Status",
+                "name": "opt_network_fakenet",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "description": "FakeNet feature status. Default value: false."
+              },
+              {
+                "title": "TOR Using",
+                "name": "opt_network_tor",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "description": "TOR using. Default value: false."
+              },
+              {
+                "title": "HTTPS MITM Proxy",
+                "name": "opt_network_mitm",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "description": "HTTPS MITM proxy option. Default value: false."
+              },
+              {
+                "title": "Geo Location",
+                "name": "opt_network_geo",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "Fastest",
+                  "AU",
+                  "BR",
+                  "DE",
+                  "CH",
+                  "FR",
+                  "KR",
+                  "US",
+                  "RU",
+                  "GB",
+                  "IT"
+                ],
+                "description": "Geo location option. Options You can choose from the following options: \"Fastest\", \"AU\", \"BR\", \"DE\", \"CH\", \"FR\", \"KR\", \"US\", \"RU\", \"GB\", \"IT\"."
+              },
+              {
+                "title": "Heavy Evasion",
+                "name": "opt_kernel_heavyevasion",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "description": "Heavy evasion option. Default value: false."
+              },
+              {
+                "title": "Privacy Setting",
+                "name": "opt_privacy_type",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "Public",
+                  "By Link",
+                  "Owner"
+                ],
+                "description": "Privacy settings. Default value is \"By Link\". Options You can choose from the following options: \"Public\", \"By Link\", \"Owner\"."
+              },
+              {
+                "title": "Timeout",
+                "name": "opt_timeout",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "text",
+                "value": "60",
+                "tooltip": "Default value: 60 Size range: 10-660",
+                "description": "Timeout option.Default value: 60 Size range: 10-660."
+              },
+              {
+                "title": "Start Object From",
+                "name": "obj_ext_startfolder",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "Desktop",
+                  "Home",
+                  "Downloads",
+                  "App Data",
+                  "Temp",
+                  "Windows",
+                  "Root"
+                ],
+                "description": "Start object from. Default value: temp. Options You can choose from the following options: \"Desktop\", \"Home\", \"Downloads\", \"App Data\", \"Temp\", \"Windows\", \"Root\"."
+              }
+            ],
+            "Object": [
+              {
+                "title": "Object Type",
+                "name": "obj_type",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "File",
+                  "URL",
+                  "Download"
+                ],
+                "onchange": {
+                  "File": [
+                    {
+                      "title": "File ID(IRI)",
+                      "name": "file_id",
+                      "type": "text",
+                      "visible": true,
+                      "editable": true,
+                      "required": true,
+                      "tooltip": "ID or IRI value of the file that you want to upload to the ANY.RUN. The file ID or IRI is used to access the file in the 'Attachments' module of CyOPs.",
+                      "description": "ID or IRI value of the file that you want to upload to the ANY.RUN. The file ID or IRI is used to access the file in the 'Attachments' module of CyOPs."
+                    },
+                    {
+                      "title": "Execute Command",
+                      "name": "obj_ext_cmd",
+                      "type": "text",
+                      "visible": true,
+                      "editable": true,
+                      "required": false,
+                      "tooltip": "Size range: 2-256",
+                      "description": "Optional command line. Used only with \"File\" and \"Download\" object types. Size range: 2-256."
+                    }
+                  ],
+                  "URL": [
+                    {
+                      "title": "URL",
+                      "name": "obj_url",
+                      "type": "text",
+                      "visible": true,
+                      "editable": true,
+                      "required": true,
+                      "tooltip": "Size range: 5-512 Required format: (http/https)://(your-link)",
+                      "description": "URL, used only if \"Object Type\" is \"URL\" or \"Download\". Size range: 5-512 Required format: (http/https)://(your-link)"
+                    },
+                    {
+                      "title": "Browser Name",
+                      "name": "obj_ext_browser",
+                      "visible": true,
+                      "editable": true,
+                      "required": false,
+                      "type": "select",
+                      "options": [
+                        "Internet Explorer",
+                        "Google Chrome",
+                        "Mozilla Firefox",
+                        "Opera"
+                      ],
+                      "description": "Browser name, used only for \"URL\" object type. Options You can choose from the following options: \"Internet Explorer\" Allowed values: \"Google Chrome\", \"Mozilla Firefox\", \"Opera\", \"Internet Explorer\"."
+                    }
+                  ],
+                  "Download": [
+                    {
+                      "title": "URL",
+                      "name": "obj_url",
+                      "type": "text",
+                      "visible": true,
+                      "editable": true,
+                      "required": false,
+                      "tooltip": "Size range: 5-512 Required format: (http/https)://(your-link)",
+                      "description": "URL, used only if \"Object Type\" is \"URL\" or \"Download\". Size range: 5-512 Required format: (http/https)://(your-link)"
+                    },
+                    {
+                      "title": "Execute Command",
+                      "name": "obj_ext_cmd",
+                      "type": "text",
+                      "visible": true,
+                      "editable": true,
+                      "required": false,
+                      "tooltip": "Size range: 2-256",
+                      "description": "Optional command line. Used only with \"File\" and \"Download\" object types. Size range: 2-256."
+                    },
+                    {
+                      "title": "User Agent",
+                      "name": "obj_ext_useragent",
+                      "type": "text",
+                      "visible": true,
+                      "editable": true,
+                      "required": false,
+                      "tooltip": "Size range: 2-256",
+                      "description": "User agent, used only for \"Download\" object types. Size range: 2-256."
+                    },
+                    {
+                      "title": "Hide Source URL",
+                      "name": "opt_privacy_hidesource",
+                      "visible": true,
+                      "required": false,
+                      "editable": true,
+                      "type": "checkbox",
+                      "tooltip": "Default value: false",
+                      "description": "Option for hiding of source URL, used only for \"Download\" type. Default value: false."
+                    }
+                  ]
+                },
+                "description": "Type of new task.Default value: file. Options You can choose from the following options: \"File\", \"URL\", \"Download\"."
+              },
+              {
+                "title": "Encounter UAC Prompts",
+                "name": "obj_ext_elevateprompt",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "tooltip": "Default value: true",
+                "description": "Encounter UAC prompts. Default value: true."
+              },
+              {
+                "title": "Change Extension",
+                "name": "obj_ext_extension",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "tooltip": "Default value: true",
+                "description": "Change extension to valid. Default value: true"
+              }
+            ]
+          }
+        }
+      ],
+      "output_schema": {
+        "error": "",
+        "data": {
+          "taskid": ""
+        }
+      }
+    }
+  ]
+}
+
