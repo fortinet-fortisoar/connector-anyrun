@@ -9,7 +9,7 @@
   "category": "Forensics & Malware Analysis",
   "icon_small_name": "small.png",
   "icon_large_name": "medium.png",
-  "help_online": "",
+  "help_online": "https://docs.fortinet.com/document/fortisoar/1.0.0/any-run/172/any-run-v1-0-0",
   "configuration": {
     "fields": [
       {
@@ -29,7 +29,7 @@
         "editable": true,
         "visible": true,
         "type": "text",
-        "description": "Username to access the ANY.RUN endpoint."
+        "description": "Username to access the ANY.RUN endpoint to which you will connect and perform automated operations."
       },
       {
         "title": "Password",
@@ -38,7 +38,7 @@
         "editable": true,
         "visible": true,
         "type": "password",
-        "description": "Password to access the ANY.RUN endpoint."
+        "description": "Password to access the ANY.RUN endpoint to which you will connect and perform automated operations."
       },
       {
         "title": "Verify SSL",
@@ -56,7 +56,7 @@
     {
       "operation": "get_history",
       "title": "Get History",
-      "description": "Get analysis history from ANY.RUN server based on input parameters that you have specified.",
+      "description": "Retrieves analysis history from ANY.RUN based on input parameters you have specified.",
       "category": "investigation",
       "annotation": "get_history",
       "enabled": true,
@@ -68,8 +68,8 @@
           "required": false,
           "editable": true,
           "type": "checkbox",
-          "tooltip": "Leave this field blank to get your history or specify to get team history. Default value: false",
-          "description": "Leave this field blank to get your history or specify to get team history. Default value: false"
+          "tooltip": "Select this checkbox and specify the team to retrieve the history of the team. if you leave the checkbox cleared (default), then your history is retrieved",
+          "description": "Select this checkbox and specify the team to retrieve the history of the team. if you leave the checkbox cleared (default), then your history is retrieved."
         },
         {
           "title": "Skip",
@@ -79,8 +79,8 @@
           "editable": true,
           "type": "text",
           "value": "0",
-          "tooltip": "The number of result to skip. Default value \"0\"",
-          "description": "The number of result to skip. Default value \"0\""
+          "tooltip": "The number of results that this operation should skip. By default, this is set to \"0\"",
+          "description": "The number of results that this operation should skip. By default, this is set to \"0\"."
         },
         {
           "title": "Limit",
@@ -89,8 +89,8 @@
           "required": false,
           "editable": true,
           "type": "text",
-          "tooltip": "The number of result to retrieve. Size range: 1-100 Default value: 25",
-          "description": "Limit the history of the retrived to the number of results. Default value: 25. Size range: 1-100"
+          "tooltip": "Maximum number of items that this operation should return in a single search. By default, this is set to \"25\". You can specify any number between 1-100.",
+          "description": "Maximum number of items that this operation should return in a single search. By default, this is set to \"25\". You can specify any number between 1-100."
         }
       ],
       "output_schema": {
@@ -122,7 +122,7 @@
     {
       "operation": "get_report",
       "title": "Get Report",
-      "description": "Get report of task ID generated from submitted analysis of ANY.RUN server based on input parameters that you have specified.",
+      "description": "Retrieves a report for the specified task ID from ANY.RUN based on task UUID you have specified. The task ID is generated when you have submitted an analysis to ANY.RUN.",
       "category": "investigation",
       "annotation": "get_report",
       "enabled": true,
@@ -135,7 +135,7 @@
           "editable": true,
           "type": "text",
           "tooltip": "UUID of task",
-          "description": "Specify UUID of task generated from submitted analysis."
+          "description": "UUID of that task whose report you want to retrieve from ANY.RUN. Task ID is generated from an analysis submitted to ANY.RUN."
         }
       ],
       "output_schema": {
@@ -443,7 +443,7 @@
     {
       "operation": "run_analysis",
       "title": "Run Analysis",
-      "description": "Run new analysis in ANY.RUN server based on input parameters that you have specified.",
+      "description": "Runs an analysis in ANY.RUN based on the action that you want to perform using ANY.RUN and other input parameters you have specified.",
       "category": "investigation",
       "annotation": "run_analysis",
       "enabled": true,
@@ -460,7 +460,7 @@
             "Options",
             "Object"
           ],
-          "description": "Perform action in ANY.RUN run new analysis. You can choose from the following options: Environment, Options or Object.",
+          "description": "Type of analysis (action) that you want to perform using ANY.RUN. You can choose from the following options: Environment, Options, or Object.",
           "onchange": {
             "Environment": [
               {
@@ -470,9 +470,9 @@
                 "required": false,
                 "editable": true,
                 "type": "text",
-                "tooltip": "Default value: windows Allowed values: \"windows\"",
+                "tooltip": "Operation System(OS) on which you want to run the ANY.RUN analysis. By default, this is set to \"windows\", which is also its allowed value.",
                 "value": "windows",
-                "description": "Specify Operation System. Default value: windows Allowed values: \"windows\""
+                "description": "Operation System(OS) on which you want to run the ANY.RUN analysis. By default, this is set to \"windows\", which is also its allowed value."
               },
               {
                 "title": "Bitness",
@@ -482,8 +482,8 @@
                 "editable": true,
                 "type": "text",
                 "value": "32",
-                "tooltip": "Bitness of Operation System. Default value: 32 Allowed values: 32, 64",
-                "description": "Specify Bitness of Operation System. Default value: 32 Allowed values: 32, 64"
+                "tooltip": "Bitness of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"32\". The allowed values are \"32\" and \"64\"",
+                "description": "Bitness of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"32\". The allowed values are \"32\" and \"64\""
               },
               {
                 "title": "ENV Version",
@@ -494,7 +494,7 @@
                 "type": "text",
                 "tooltip": "Version of OS",
                 "value": "7",
-                "description": "Version of OS.Default value: 7 Allowed values: \"vista\", \"7\", \"8.1\", \"10\" "
+                "description": "Version of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"7\". The allowed values are \"7\", \"8.1\", and \"10\"."
               },
               {
                 "title": "ENV Type",
@@ -510,7 +510,7 @@
                 ],
                 "value": "Complete",
                 "tooltip": "Environment preset type",
-                "description": "Environment preset type. Default value: Complete Options You can choose from the following options: \"Clean\", \"Office\", \"Complete\""
+                "description": "Environment preset type on which you want to run the ANY.RUN analysis. By default, this is set to \"Complete\". You can choose from the following options: \"Clean\", \"Office\", or \"Complete\" "
               }
             ],
             "Options": [
@@ -522,7 +522,7 @@
                 "editable": true,
                 "type": "checkbox",
                 "value": true,
-                "description": "Network connection state. Default value: true."
+                "description": "State of the network connection on which you want to run the ANY.RUN analysis. By default, this checkbox is selected, i.e., it is set to \"true\"."
               },
               {
                 "title": "FakeNet Feature Status",
@@ -532,7 +532,7 @@
                 "editable": true,
                 "type": "checkbox",
                 "value": false,
-                "description": "FakeNet feature status. Default value: false."
+                "description": "Status of the FakeNet feature on which you want to run the ANY.RUN analysis. By default, this checkbox is cleared, i.e., it is set to \"false\"."
               },
               {
                 "title": "TOR Using",
@@ -542,7 +542,7 @@
                 "editable": true,
                 "type": "checkbox",
                 "value": false,
-                "description": "TOR using. Default value: false."
+                "description": "Option that is set for the TOR Using parameter on which you want to run the ANY.RUN analysis. By default, this checkbox is cleared, i.e., it is set to \"false\"."
               },
               {
                 "title": "HTTPS MITM Proxy",
@@ -552,7 +552,7 @@
                 "editable": true,
                 "type": "checkbox",
                 "value": false,
-                "description": "HTTPS MITM proxy option. Default value: false."
+                "description": "Option that is set for the HTTPS MITM proxy parameter on which you want to run the ANY.RUN analysis. By default, this checkbox is cleared, i.e., it is set to \"false\"."
               },
               {
                 "title": "Geo Location",
@@ -574,7 +574,7 @@
                   "GB",
                   "IT"
                 ],
-                "description": "Geo location option. Options You can choose from the following options: \"Fastest\", \"AU\", \"BR\", \"DE\", \"CH\", \"FR\", \"KR\", \"US\", \"RU\", \"GB\", \"IT\"."
+                "description": "Option that is set for the Geo Location parameter on which you want to run the ANY.RUN analysis. You can choose from the following options: \"Fastest\", \"AU\", \"BR\", \"DE\", \"CH\", \"FR\", \"KR\", \"US\", \"RU\", \"GB\", or \"IT\"."
               },
               {
                 "title": "Heavy Evasion",
@@ -584,7 +584,7 @@
                 "editable": true,
                 "type": "checkbox",
                 "value": false,
-                "description": "Heavy evasion option. Default value: false."
+                "description": "Option that is set for the Heavy Evasion parameter on which you want to run the ANY.RUN analysis. By default, this checkbox is cleared, i.e., it is set to \"false\"."
               },
               {
                 "title": "Privacy Setting",
@@ -598,7 +598,7 @@
                   "By Link",
                   "Owner"
                 ],
-                "description": "Privacy settings. Default value is \"By Link\". Options You can choose from the following options: \"Public\", \"By Link\", \"Owner\"."
+                "description": "Value that is set for the Privacy Settings parameter on which you want to run the ANY.RUN analysis. By default, this is set to \"By Link\". You can choose from the following options: \"Public\", \"By Link\", or \"Owner\"."
               },
               {
                 "title": "Timeout",
@@ -609,7 +609,7 @@
                 "type": "text",
                 "value": "60",
                 "tooltip": "Default value: 60 Size range: 10-660",
-                "description": "Timeout option.Default value: 60 Size range: 10-660."
+                "description": "Value that is set for the Timeout parameter on which you want to run the ANY.RUN analysis. By default, this is set to \"60\". You can specify any number between 10-660."
               },
               {
                 "title": "Start Object From",
@@ -627,7 +627,7 @@
                   "Windows",
                   "Root"
                 ],
-                "description": "Start object from. Default value: temp. Options You can choose from the following options: \"Desktop\", \"Home\", \"Downloads\", \"App Data\", \"Temp\", \"Windows\", \"Root\"."
+                "description": "Object from where you want to start the ANY.RUN analysis. By default, this is set to \"Temp\". You can choose from the following options: \"Desktop\", \"Home\", \"Downloads\", \"App Data\", \"Temp\", \"Windows\", or \"Root\"."
               }
             ],
             "Object": [
@@ -652,8 +652,8 @@
                       "visible": true,
                       "editable": true,
                       "required": true,
-                      "tooltip": "ID or IRI value of the file that you want to upload to the ANY.RUN. The file ID or IRI is used to access the file in the 'Attachments' module of CyOPs.",
-                      "description": "ID or IRI value of the file that you want to upload to the ANY.RUN. The file ID or IRI is used to access the file in the 'Attachments' module of CyOPs."
+                      "tooltip": "Attachment ID or IRI value of the file that you want to upload to ANY.RUN for analysis. The file ID or IRI is used to access the file in the FortiSOAR 'Attachments' module.",
+                      "description": "ID or IRI value of the file that you want to upload to ANY.RUN for analysis. The file ID or IRI is used to access the file in the FortiSOAR 'Attachments' module."
                     },
                     {
                       "title": "Execute Command",
@@ -663,7 +663,7 @@
                       "editable": true,
                       "required": false,
                       "tooltip": "Size range: 2-256",
-                      "description": "Optional command line. Used only with \"File\" and \"Download\" object types. Size range: 2-256."
+                      "description": "Optional command line to be run in ANY.RUN. The supported size range is 2-256. "
                     }
                   ],
                   "URL": [
@@ -675,7 +675,7 @@
                       "editable": true,
                       "required": true,
                       "tooltip": "Size range: 5-512 Required format: (http/https)://(your-link)",
-                      "description": "URL, used only if \"Object Type\" is \"URL\" or \"Download\". Size range: 5-512 Required format: (http/https)://(your-link)"
+                      "description": "URL that you want to submit to ANY.RUN for analysis. The format that is required is: (http/https)://(your-link)/. The supported size range is 5-512. "
                     },
                     {
                       "title": "Browser Name",
@@ -690,7 +690,7 @@
                         "Mozilla Firefox",
                         "Opera"
                       ],
-                      "description": "Browser name, used only for \"URL\" object type. Options You can choose from the following options: \"Internet Explorer\" Allowed values: \"Google Chrome\", \"Mozilla Firefox\", \"Opera\", \"Internet Explorer\"."
+                      "description": "Name of the browser name on which you want to run the ANY.RUN analysis. By default, this is set to \"Internet Explorer\". You can choose from the following options: \"Google Chrome\", \"Mozilla Firefox\", \"Opera\", \"Internet Explorer\"."
                     }
                   ],
                   "Download": [
@@ -702,7 +702,7 @@
                       "editable": true,
                       "required": false,
                       "tooltip": "Size range: 5-512 Required format: (http/https)://(your-link)",
-                      "description": "URL, used only if \"Object Type\" is \"URL\" or \"Download\". Size range: 5-512 Required format: (http/https)://(your-link)"
+                      "description": "URL that you want to submit to ANY.RUN for analysis. The format that is required is: (http/https)://(your-link)/. The supported size range is 5-512."
                     },
                     {
                       "title": "Execute Command",
@@ -732,7 +732,7 @@
                       "editable": true,
                       "type": "checkbox",
                       "tooltip": "Default value: false",
-                      "description": "Option for hiding of source URL, used only for \"Download\" type. Default value: false."
+                      "description": "Select this option, i.e., set it to \"true\" to hide the source URL. By default, this checkbox is cleared, i.e., it is set to \"false\""
                     }
                   ]
                 },
@@ -746,7 +746,8 @@
                 "editable": true,
                 "type": "checkbox",
                 "tooltip": "Default value: true",
-                "description": "Encounter UAC prompts. Default value: true."
+                "value": true,
+                "description": "Select this checkbox, i.e., set it to \"true\" to enable UAC prompts. By default, this checkbox is checked, i.e., it is set to \"true\". option."
               },
               {
                 "title": "Change Extension",
@@ -755,8 +756,9 @@
                 "required": false,
                 "editable": true,
                 "type": "checkbox",
+                "value": true,
                 "tooltip": "Default value: true",
-                "description": "Change extension to valid. Default value: true"
+                "description": "Select this checkbox, i.e., set it to \"true\" to change the extension to \"valid\". By default, this checkbox is checked, i.e., it is set to \"true\"."
               }
             ]
           }
