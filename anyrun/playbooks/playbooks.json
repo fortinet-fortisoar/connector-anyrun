@@ -66,6 +66,9 @@
           "description": "Get analysis history from ANY.RUN server based on input parameters that you have specified.",
           "name": "Get History",
           "tag": "#ANY.RUN",
+          "recordTags": [
+            "ANY.RUN"
+          ],
           "isActive": false,
           "singleRecordExecution": false,
           "parameters": [],
@@ -142,6 +145,9 @@
           "description": "Get report of task ID generated from submitted analysis of ANY.RUN server based on input parameters that you have specified.",
           "name": "Get Report",
           "tag": "#ANY.RUN",
+          "recordTags": [
+            "ANY.RUN"
+          ],
           "isActive": false,
           "singleRecordExecution": false,
           "parameters": [],
@@ -234,6 +240,9 @@
           "description": "Run new analysis in ANY.RUN server based on input parameters that you have specified.",
           "name": "Run Analysis",
           "tag": "#ANY.RUN",
+          "recordTags": [
+            "ANY.RUN"
+          ],
           "isActive": false,
           "singleRecordExecution": false,
           "parameters": [],
@@ -257,5 +266,8 @@
       "visible": true,
       "image": null
     }
+  ],
+  "exported_tags": [
+    "ANY.RUN"
   ]
 }
