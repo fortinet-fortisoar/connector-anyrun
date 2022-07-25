@@ -21,7 +21,7 @@
           "tag": null,
           "description": "Input is URL, Output is HTML reputation details and HTML score and Integer score",
           "isActive": false,
-          "debug": true,
+          "debug": false,
           "singleRecordExecution": false,
           "remoteExecutableFlag": false,
           "parameters": [

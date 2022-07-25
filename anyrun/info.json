@@ -9,7 +9,7 @@
     "category": "Forensics & Malware Analysis",
     "icon_small_name": "small.png",
     "icon_large_name": "medium.png",
-    "help_online": "https://docs.fortinet.com/document/fortisoar/1.0.0/any-run/172/any-run-v1-0-0",
+    "help_online": "",
     "configuration": {
       "fields": [
         {
@@ -786,7 +786,8 @@
                 "required": true,
                 "visible": true,
                 "editable": true,
-                "tooltip": "UUID of task"
+                "tooltip": "UUID of task",
+                "description": "UUID of that task whose report you want to retrieve from ANY.RUN. Task ID is generated from an analysis submitted to ANY.RUN."
             }
         ],
         "output_schema": ""
