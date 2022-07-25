@@ -6,13 +6,16 @@
 from connectors.core.connector import get_logger, ConnectorError
 from requests import exceptions as req_exceptions
 import base64
+import os
 import requests
+from requests.auth import HTTPBasicAuth
 from os.path import join
 from integrations.crudhub import make_request
-from connectors.cyops_utilities.builtins import download_file_from_cyops
+from connectors.cyops_utilities.builtins import download_file_from_cyops, upload_file_to_cyops
 
 logger = get_logger('anyrun')
 
+TMP_DIR = '/tmp/'
 PARAM_MAPPING = {
     'Clean': 'clean',
     'Office': 'office',
@@ -33,7 +36,7 @@ PARAM_MAPPING = {
     'Download': 'download'
 }
 
-
+#Utility Functions
 def check_response(response):
     try:
         if response.ok:
@@ -45,6 +48,20 @@ def check_response(response):
     except Exception as e:
         raise ConnectorError(e)
 
+def handle_upload_file_to_cyops(file_path):
+    try:
+        file_name = os.path.basename(file_path)
+        attach_response = upload_file_to_cyops(file_path=file_path,
+                                               filename=file_name,
+                                               name=file_name,
+                                               create_attachment=True)
+        logger.debug('{0}'.format(str(type(attach_response))))
+        os.remove(file_path)
+        return {'file_details':attach_response}
+    except Exception as err:
+        os.remove(file_path)
+        logger.exception('An exception occurred {0}'.format(str(err)))
+        raise ConnectorError('An exception occurred {0}'.format(str(err)))
 
 def get_config_data(config):
     host = config.get('server', None)
@@ -99,29 +116,6 @@ def build_payload(params):
     logger.info('payload: {}'.format(payload))
     return payload
 
-
-def get_history(config, params):
-    try:
-        api_endpoint = 'analysis/'
-        query_params = build_payload(params)
-        # return query_params
-        return make_rest_call(api_endpoint, config, params=query_params)
-    except Exception as e:
-        # logger.error(e)
-        raise ConnectorError(e)
-
-
-def get_report(config, params):
-    try:
-        task_uuid = params.get('task_uuid')
-        api_endpoint = 'analysis/{task_id}'.format(task_id=task_uuid)
-        # return query_params
-        return make_rest_call(api_endpoint, config)
-    except Exception as e:
-        logger.error(e)
-        raise ConnectorError(e)
-
-
 def handle_attachments(file_id):
     iri_type = 'attachment'
     file_name = None
@@ -145,7 +139,88 @@ def handle_attachments(file_id):
     files = {
         'file': (file_name, open(file_path, 'rb'))
     }
-    return files
+    return files    
+
+def report_api_request(url, config, params=None, method='GET'):
+    host, user, password, verify_ssl = get_config_data(config)
+    try:
+        response = requests.request(method, url, params=params,
+                             auth=HTTPBasicAuth(user, password), verify=verify_ssl)
+        
+        if response.ok:
+            if 'application/json' in response.headers['content-type']:
+                return response.json()
+            elif 'text/html' in response.headers['content-type']:
+                return response.content
+            elif 'content-disposition' in response.headers and 'attachment; filename=' in response.headers['content-disposition']:
+                filename = response.headers['content-disposition'].split('=')[1].replace('\'','').replace('"','')
+                file_path = TMP_DIR + filename
+                logger.debug('Saving file content to: {}'.format(file_path))
+                with open(file_path, "wb") as downloaded_file:
+                    downloaded_file.write(response.content)
+                return handle_upload_file_to_cyops(file_path)
+        else:    
+            raise ConnectorError('Fail To request API {0} response is : {1}'.format(str(response.url), str(response.content)))
+    except req_exceptions.SSLError:
+        logger.error('An SSL error occurred')
+        raise ConnectorError('An SSL error occurred')
+    except req_exceptions.ConnectionError:
+        logger.error('A connection error occurred')
+        raise ConnectorError('A connection error occurred')
+    except req_exceptions.Timeout:
+        logger.error('The request timed out')
+        raise ConnectorError('The request timed out')
+    except req_exceptions.RequestException:
+        logger.error('There was an error while handling the request')
+        raise ConnectorError('There was an error while handling the request')
+    except Exception as e:
+        raise ConnectorError(e)
+
+
+# Operations functions
+
+
+def get_report_attachments(config, params):
+    try:
+        uploads_report = {}
+        report = get_report(config, params)
+        content_files = {
+                         'pcap':report['data']['analysis']['content']['pcap']['permanentUrl'],
+                         'video':report['data']['analysis']['content']['video']['permanentUrl'],
+                         'screenshot':report['data']['analysis']['content']['screenshots'][0]['permanentUrl'],
+                         'ioc':report['data']['analysis']['reports']['IOC'],
+                         'html':report['data']['analysis']['reports']['HTML'],
+                         'misp':report['data']['analysis']['reports']['MISP']
+                        }
+
+        for k,v in content_files.items():
+            response = report_api_request(v, config)
+            uploads_report.update({k:response})
+
+        return uploads_report  
+
+    except Exception as e:
+        logger.error(e)
+        raise ConnectorError(e)
+
+def get_history(config, params):
+    try:
+        api_endpoint = 'analysis/'
+        query_params = build_payload(params)
+        return make_rest_call(api_endpoint, config, params=query_params)
+    except Exception as e:
+        logger.error(e)
+        raise ConnectorError(e)
+
+
+def get_report(config, params):
+    try:
+        task_uuid = params.get('task_uuid')
+        api_endpoint = 'analysis/{task_id}'.format(task_id=task_uuid)
+        return make_rest_call(api_endpoint, config)
+    except Exception as e:
+        logger.error(e)
+        raise ConnectorError(e)
 
 
 def run_analysis(config, params):
@@ -161,6 +236,21 @@ def run_analysis(config, params):
     except Exception as e:
         raise ConnectorError(e)
 
+def get_available_environments(config, params):
+    try:
+        api_endpoint = 'environment'
+        return make_rest_call(api_endpoint, config)
+    except Exception as e:
+        logger.error(e)
+        raise ConnectorError(e)
+        
+def get_user_limits(config, params):
+    try:
+        api_endpoint = 'user'
+        return make_rest_call(api_endpoint, config)
+    except Exception as e:
+        logger.error(e)
+        raise ConnectorError(e)  
 
 def _check_health(config):
     try:
@@ -175,5 +265,8 @@ def _check_health(config):
 operations = {
     'get_history': get_history,
     'get_report': get_report,
-    'run_analysis': run_analysis
+    'run_analysis': run_analysis,
+    'get_available_environments': get_available_environments,
+    'get_user_limits': get_user_limits,
+    'get_report_attachments': get_report_attachments
 }
