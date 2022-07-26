@@ -9,7 +9,7 @@
     "category": "Forensics & Malware Analysis",
     "icon_small_name": "small.png",
     "icon_large_name": "medium.png",
-    "help_online": "",
+    "help_online": "https://docs.fortinet.com/document/fortisoar/1.1.0/any-run/348/any-run-v1-1-0",
     "configuration": {
       "fields": [
         {
@@ -20,7 +20,7 @@
           "visible": true,
           "type": "text",
           "value": "https://api.any.run",
-          "description": "FQDN of the ANY.RUN server to which you will connect and perform automated operations."
+          "description": "Specify the FQDN of the ANY.RUN server to which you will connect and perform automated operations."
         },
         {
           "title": "Username",
@@ -29,7 +29,7 @@
           "editable": true,
           "visible": true,
           "type": "text",
-          "description": "Username to access the ANY.RUN endpoint to which you will connect and perform automated operations."
+          "description": "Specify the Username to access the ANY.RUN endpoint to which you will connect and perform automated operations."
         },
         {
           "title": "Password",
@@ -38,7 +38,7 @@
           "editable": true,
           "visible": true,
           "type": "password",
-          "description": "Password to access the ANY.RUN endpoint to which you will connect and perform automated operations."
+          "description": "Specify the Password to access the ANY.RUN endpoint to which you will connect and perform automated operations."
         },
         {
           "title": "Verify SSL",
@@ -48,7 +48,7 @@
           "editable": true,
           "type": "checkbox",
           "value": true,
-          "description": "Specifies whether the SSL certificate for the server is to be verified or not.By default, this option is set as True."
+          "description": "Specifies whether the SSL certificate for the server is to be verified or not. By default, this option is set as True."
         }
       ]
     },
@@ -122,7 +122,7 @@
       {
         "operation": "get_report",
         "title": "Get Report",
-        "description": "Retrieves a report for the specified task ID from ANY.RUN based on task UUID you have specified. The task ID is generated when you have submitted an analysis to ANY.RUN.",
+        "description": "Retrieves a report for the specified task ID from ANY.RUN based on the task UUID you have specified. The task ID is generated when you have submitted an analysis to ANY.RUN.",
         "category": "investigation",
         "annotation": "get_report",
         "enabled": true,
@@ -135,7 +135,7 @@
             "editable": true,
             "type": "text",
             "tooltip": "UUID of task",
-            "description": "UUID of that task whose report you want to retrieve from ANY.RUN. Task ID is generated from an analysis submitted to ANY.RUN."
+            "description": "Specify the UUID of the task whose report you want to retrieve from ANY.RUN. A Task ID is generated from an analysis submitted to ANY.RUN."
           }
         ],
         "output_schema": {
@@ -443,7 +443,7 @@
       {
         "operation": "run_analysis",
         "title": "Run Analysis",
-        "description": "Runs an analysis in ANY.RUN based on the action that you want to perform using ANY.RUN and other input parameters you have specified.",
+        "description": "Runs an analysis in ANY.RUN based on the action (type of analysis) you want to perform using ANY.RUN and other input parameters you have specified.",
         "category": "investigation",
         "annotation": "run_analysis",
         "enabled": true,
@@ -774,7 +774,7 @@
       {
         "operation": "get_report_attachments",
         "title": "Get Report Attachments",
-        "description": "Retrieves several report attachments such as the HTML report, screenshot, execution video, Misp record and many more",
+        "description": "Retrieves several report attachments such as the HTML report, screenshot, execution video, MISP record, etc from ANY.RUN based on the task UUID you have specified.",
         "category": "investigation",
         "annotation": "get_report_attachments",
         "enabled": true,
@@ -787,7 +787,7 @@
                 "visible": true,
                 "editable": true,
                 "tooltip": "UUID of task",
-                "description": "UUID of that task whose report you want to retrieve from ANY.RUN. Task ID is generated from an analysis submitted to ANY.RUN."
+                "description": "UUID of that task whose report you want to retrieve from ANY.RUN. Task ID is generated from an analysis submitted to ANY.RUN.Specify the UUID of the task whose report attachments such as the HTML report, screenshot, execution video, MISP record, etc. you want to retrieve from ANY.RUN. Note: A Task ID is generated from an analysis submitted to ANY.RUN."
             }
         ],
         "output_schema": ""
@@ -795,7 +795,7 @@
       {
         "operation": "get_available_environments",
         "title": "Get Available Environments",
-        "description": "Retrieves the list of available sandbox VMs environments.",
+        "description": "Retrieves the list of all available sandbox VM environments from ANY.RUN.",
         "category": "investigation",
         "annotation": "get_available_environments",
         "enabled": true,
@@ -826,7 +826,7 @@
       {
         "operation": "get_user_limits",
         "title": "Get User Limits",
-        "description": "Retrieves requests limits for the authenticated user according to the subscribed plan.",
+        "description": "Retrieves the request limits of the authenticated user, according to the subscribed plan, from ANY.RUN.",
         "category": "investigation",
         "annotation": "get_user_limits",
         "enabled": true,
