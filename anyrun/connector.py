@@ -1,29 +1,27 @@
-""" Copyright start
-  Copyright (C) 2008 - 2021 Fortinet Inc.
-  All rights reserved.
-  FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
-  Copyright end """
 from connectors.core.connector import Connector, ConnectorError, get_logger
 
-from .operations import operations, _check_health
+from .operations import _check_health, operations
+from .constants import LOGGER_NAME
 
-logger = get_logger('anyrun')
+logger = get_logger(LOGGER_NAME)
 
 
-class anyrun(Connector):
-    def execute(self, config, operation_name, params, **kwargs):
+class Any_run(Connector):  # noqa: N801
+    def execute(self, config, operation, params, *args, **kwargs):
+        """ Executes the action """
         try:
-            logger.info("Action name: {}".format(operation_name))
-            op = operations.get(operation_name)
-            result = op(config, params)
-            return result
-        except Exception as e:
-            logger.exception("An exception occurred {}".format(e))
-            raise ConnectorError(e)
+            logger.info(f'Action name: {operation}')
+            op = operations.get(operation)
 
-    def check_health(self, config):
+            return op(config, params)
+        except Exception as e:
+            logger.exception(f'An exception in execute occurred {e.args}')
+            raise ConnectorError(e) from e
+
+    def check_health(self, config=None, *args, **kwargs):
+        """ Checks connection to ANY.RUN """
         try:
             return _check_health(config)
         except Exception as e:
-            logger.error('{}'.format(e))
-            raise ConnectorError(e)
+            logger.exception(f'An exception in health check occurred {e.args}')
+            raise ConnectorError(e) from e
