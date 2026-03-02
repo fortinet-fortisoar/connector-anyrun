@@ -1,6 +1,12 @@
+"""
+Copyright start
+MIT License
+Copyright (c) 2026 Fortinet Inc
+Copyright end
+"""
+
 import os
 import traceback
-
 from anyrun import RunTimeException
 from connectors.core.connector import ConnectorError, get_logger
 from connectors.cyops_utilities.builtins import (
@@ -18,6 +24,7 @@ TMP_DIR = '/tmp/'  # noqa: S108
 
 def exceptions_handler(function):
     """ Handles errors in functions """
+
     def wrapper(*args, **kwargs):
 
         try:
@@ -106,7 +113,7 @@ def get_user_history(config, params: dict) -> list[dict]:
 @exceptions_handler
 def get_report(config, params: dict) -> dict:
     report_type, task_uuid, is_attachment = (
-        params.get('report_type', 'summary'),
+        params.get('report_type', 'Summary').lower(),
         params.get('task_uuid'),
         params.get('is_attachment', False),
     )
@@ -149,7 +156,6 @@ def delete_analysis(config, params) -> dict:
 
 @exceptions_handler
 def detonate_file(config, params) -> dict:
-
     file_id = params.pop('attachment_iri')
     file_content = _handle_attachments(file_id)
     params['file_content'] = file_content

@@ -1,2040 +1,2155 @@
 {
-    "name": "anyrun-sandbox",
-    "version": "1.2.0",
-    "label": "ANY.RUN Cloud Sandbox",
-    "description": "ANY.RUN empowers SOC teams to cut MTTD/MTTR with fast verdicts using the Interactive Sandbox. With the ANY.RUN Cloud Sandbox connector for FortiSOAR, your team achieves: <br/> \n- Faster triage: Submit files/URLs for instant analysis across Windows, Linux, Android. Get answers in seconds to catch threats that beat standard defenses and increase the detection rate by up to 36%. <br/>\n- Streamlined workflows: Retrieve reports (JSON, HTML, IOCs) directly in FortiSOAR without tool-switching. Act without delays to stop attacks before they have a chance to hurt your infrastructure.",
-    "publisher": "ANY.RUN",
-    "icon_small_name": "small.png",
-    "icon_large_name": "large.png",
-    "configuration": {
-        "fields": [
-            {
-                "title": "API Key",
-                "type": "password",
-                "name": "api_key",
-                "required": true,
-                "visible": true,
-                "editable": true,
-                "tooltip": "ANY.RUN API Key in format: \"NS9Y..FvtEd\""
-            },
-            {
-                "title": "Verify SSL",
-                "type": "checkbox",
-                "name": "verify_ssl",
-                "required": false,
-                "visible": true,
-                "editable": true,
-                "value": true,
-                "tooltip": "Specifies whether the SSL certificate for the server is to be verified. By default, this option is set as True."
-            }
-        ]
-    },
-    "operations": [
-        {
-            "operation": "get_analysis_verdict",
-            "title": "Get Analysis Verdict",
-            "description": "Get the analysis verdict.",
-            "category": "investigation",
-            "annotation": "get_analysis_verdict",
-            "enabled": true,
-            "parameters": [
-                {
-                    "title": "Analysis ID",
-                    "type": "text",
-                    "name": "task_uuid",
-                    "required": true,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "UUID of analysis"
-                }
-            ],
-            "open": false,
-            "output_schema": {
-                "error": "",
-                "data": {
-                    "verdict": "string",
-                    "status": "string"
-                }
-            }
+  "name": "anyrun",
+  "version": "2.0.0",
+  "label": "ANY.RUN Cloud Sandbox",
+  "description": "ANY.RUN empowers SOC teams to cut MTTD/MTTR with fast verdicts using the Interactive Sandbox. With the ANY.RUN Cloud Sandbox connector for FortiSOAR, your team achieves: <br/> \n- Faster triage: Submit files/URLs for instant analysis across Windows, Linux, Android. Get answers in seconds to catch threats that beat standard defenses and increase the detection rate by up to 36%. <br/>\n- Streamlined workflows: Retrieve reports (JSON, HTML, IOCs) directly in FortiSOAR without tool-switching. Act without delays to stop attacks before they have a chance to hurt your infrastructure.",
+  "publisher": "ANY.RUN",
+  "contributor": "Semen Shalnev",
+  "cs_approved": false,
+  "cs_compatible": true,
+  "category": "Malware Analysis",
+  "help_online": "",
+  "icon_small_name": "small.png",
+  "icon_large_name": "large.png",
+  "configuration": {
+    "fields": [
+      {
+        "title": "API Key",
+        "description": "API Key of the ANY.RUN endpoint server to connect and perform the automated operations.",
+        "type": "password",
+        "name": "api_key",
+        "required": true,
+        "visible": true,
+        "editable": true,
+        "tooltip": "API Key of the ANY.RUN endpoint server to connect and perform the automated operations."
+      },
+      {
+        "title": "Verify SSL",
+        "description": "Specifies whether the SSL certificate for the server is to be verified or not. By default, this option is set as True.",
+        "type": "checkbox",
+        "name": "verify_ssl",
+        "required": false,
+        "visible": true,
+        "editable": true,
+        "value": true,
+        "tooltip": "Specifies whether the SSL certificate for the server is to be verified or not. By default, this option is set as True."
+      }
+    ]
+  },
+  "operations": [
+    {
+      "operation": "get_user_limits",
+      "title": "Get User Limits",
+      "description": "Retrieves the request limits of the authenticated user, according to the subscribed plan, from ANY.RUN.",
+      "category": "investigation",
+      "annotation": "get_user_limits",
+      "enabled": true,
+      "parameters": [],
+      "open": false,
+      "output_schema": {
+        "api": {
+          "day": "",
+          "hour": "",
+          "month": "",
+          "minute": ""
         },
-        {
-            "operation": "delete_analysis",
-            "title": "Delete analysis",
-            "description": "Deletes a analysis from ANY.RUN Sandbox based on the ID you have specified.",
-            "category": "investigation",
-            "annotation": "delete_analysis",
-            "enabled": true,
-            "parameters": [
-                {
-                    "title": "Analysis ID",
-                    "type": "text",
-                    "name": "task_uuid",
-                    "required": true,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "UUID of analysis"
-                }
-            ],
-            "open": false,
-            "output_schema": {
-                "error": "",
-                "data": {
-                    "status": "success"
-                }
-            }
+        "web": {
+          "day": "",
+          "hour": "",
+          "month": "",
+          "minute": ""
         },
-        {
-            "operation": "detonate_file",
-            "title": "Detonate File",
-            "description": "Detonates a file in ANY.RUN Sandbox based on the indicator or attachment IRI you have specified.",
-            "category": "investigation",
-            "annotation": "detonate_file",
-            "enabled": true,
-            "parameters": [
-                {
-                    "title": "Attachment IRI",
-                    "type": "text",
-                    "name": "attachment_iri",
-                    "required": true,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "IRI of the indicator or attachment you want to detonate in ANY.RUN Sandbox."
-                },
-                {
-                    "title": "Operating system",
-                    "type": "select",
-                    "name": "operationSystem",
-                    "required": true,
-                    "visible": true,
-                    "editable": true,
-                    "options": [
-                        "Windows",
-                        "Linux",
-                        "Android"
-                    ],
-                    "onchange": {
-                        "Windows": [
-                            {
-                                "title": "Timeout",
-                                "name": "opt_timeout",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "text",
-                                "value": "240",
-                                "tooltip": "Timeout for the analysis. By default, this is set to \"240\"",
-                                "description": "Timeout for the analysis. By default, this is set to \"240\"",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "Bitness",
-                                "name": "env_bitness",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "32",
-                                    "64"
-                                ],
-                                "value": "64",
-                                "tooltip": "Bitness of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"64\". The allowed values are \"32\" and \"64\"",
-                                "description": "Bitness of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"64\". The allowed values are \"32\" and \"64\"",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "Locale",
-                                "name": "env_locale",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "text",
-                                "value": "en-US",
-                                "tooltip": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
-                                "description": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "ENV Type",
-                                "name": "env_type",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "clean",
-                                    "office",
-                                    "complete"
-                                ],
-                                "value": "complete",
-                                "tooltip": "Environment preset type",
-                                "description": "Type of the operating system (Default: complete)",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "ENV Version",
-                                "name": "env_version",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "'7'",
-                                    "'10'",
-                                    "'11'"
-                                ],
-                                "value": "'10'",
-                                "tooltip": "Version of the operating system (Default: 10)",
-                                "description": "Version of the operating system (Default: 10)",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "Force elevation",
-                                "name": "obj_force_elevation",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "Force elevation",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "Start folder",
-                                "name": "obj_ext_startfolder",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "desktop",
-                                    "home",
-                                    "downloads",
-                                    "appdata",
-                                    "temp",
-                                    "windows",
-                                    "root"
-                                ],
-                                "value": "temp",
-                                "tooltip": "Default value: temp",
-                                "description": "Start folder",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "Execute Command",
-                                "name": "obj_ext_cmd",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "text",
-                                "value": "",
-                                "tooltip": "Default value: <empty>",
-                                "description": "Command to execute",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "Extension to use",
-                                "name": "obj_ext_extension",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": true,
-                                "tooltip": "Default value: true",
-                                "description": "Extension to use",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "Network Connection State",
-                                "name": "opt_network_connect",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": true,
-                                "tooltip": "Default value: true",
-                                "description": "Network connection state",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "FakeNet Feature Status",
-                                "name": "opt_network_fakenet",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "FakeNet feature status",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "Geo Location",
-                                "name": "opt_network_geo",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "fastest",
-                                    "AU",
-                                    "BR",
-                                    "DE",
-                                    "CH",
-                                    "FR",
-                                    "KR",
-                                    "US",
-                                    "RU",
-                                    "GB",
-                                    "IT"
-                                ],
-                                "value": "fastest",
-                                "tooltip": "Default value: fastest",
-                                "description": "Geo location",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "HTTPS MITM Proxy",
-                                "name": "opt_network_mitm",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "HTTPS MITM Proxy option",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "Residential Proxy",
-                                "name": "opt_network_residential_proxy",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "Residential Proxy option",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "Residential Proxy Geo Location",
-                                "name": "opt_network_residential_proxy_geo",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "fastest",
-                                    "AU",
-                                    "BR",
-                                    "DE",
-                                    "CH",
-                                    "FR",
-                                    "KR",
-                                    "US",
-                                    "RU",
-                                    "GB",
-                                    "IT"
-                                ],
-                                "value": "fastest",
-                                "tooltip": "Default value: fastest",
-                                "description": "Residential Proxy Geo Location",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "TOR Using",
-                                "name": "opt_network_tor",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "TOR Using option",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "Privacy Setting",
-                                "name": "opt_privacy_type",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "public",
-                                    "bylink",
-                                    "owner",
-                                    "byteam"
-                                ],
-                                "value": "bylink",
-                                "tooltip": "Default value: bylink",
-                                "description": "Privacy setting",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            }
-                        ],
-                        "Linux": [
-                            {
-                                "title": "Timeout",
-                                "name": "opt_timeout",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "text",
-                                "value": "240",
-                                "tooltip": "Timeout for the analysis. By default, this is set to \"240\"",
-                                "description": "Timeout for the analysis. By default, this is set to \"240\"",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "Locale",
-                                "name": "env_locale",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "text",
-                                "value": "en-US",
-                                "tooltip": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
-                                "description": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "Environment",
-                                "name": "env_os",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "ubuntu",
-                                    "debian"
-                                ],
-                                "value": "ubuntu",
-                                "tooltip": "operating System",
-                                "description": "operating System",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "Start folder",
-                                "name": "obj_ext_startfolder",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "desktop",
-                                    "home",
-                                    "downloads",
-                                    "temp",
-                                    "root"
-                                ],
-                                "value": "temp",
-                                "tooltip": "Default value: temp",
-                                "description": "Start folder",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "Execute Command",
-                                "name": "obj_ext_cmd",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "text",
-                                "value": "",
-                                "tooltip": "Default value: <empty>",
-                                "description": "Command to execute",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "Extension to use",
-                                "name": "obj_ext_extension",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": true,
-                                "tooltip": "Default value: true",
-                                "description": "Extension to use",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "Network Connection State",
-                                "name": "opt_network_connect",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": true,
-                                "tooltip": "Default value: true",
-                                "description": "Network connection state",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "FakeNet Feature Status",
-                                "name": "opt_network_fakenet",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "FakeNet feature status",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "Geo Location",
-                                "name": "opt_network_geo",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "fastest",
-                                    "AU",
-                                    "BR",
-                                    "DE",
-                                    "CH",
-                                    "FR",
-                                    "KR",
-                                    "US",
-                                    "RU",
-                                    "GB",
-                                    "IT"
-                                ],
-                                "value": "fastest",
-                                "tooltip": "Default value: fastest",
-                                "description": "Geo location",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "HTTPS MITM Proxy",
-                                "name": "opt_network_mitm",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "HTTPS MITM Proxy option",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "Residential Proxy",
-                                "name": "opt_network_residential_proxy",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "Residential Proxy option",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "Residential Proxy Geo Location",
-                                "name": "opt_network_residential_proxy_geo",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "fastest",
-                                    "AU",
-                                    "BR",
-                                    "DE",
-                                    "CH",
-                                    "FR",
-                                    "KR",
-                                    "US",
-                                    "RU",
-                                    "GB",
-                                    "IT"
-                                ],
-                                "value": "fastest",
-                                "tooltip": "Default value: fastest",
-                                "description": "Residential Proxy Geo Location",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "TOR Using",
-                                "name": "opt_network_tor",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "TOR Using option",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "Privacy Setting",
-                                "name": "opt_privacy_type",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "public",
-                                    "bylink",
-                                    "owner",
-                                    "byteam"
-                                ],
-                                "value": "bylink",
-                                "tooltip": "Default value: bylink",
-                                "description": "Privacy setting",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "Run as root",
-                                "name": "run_as_root",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "Run as root",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            }
-                        ],
-                        "Android": [
-                            {
-                                "title": "Timeout",
-                                "name": "opt_timeout",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "text",
-                                "value": "240",
-                                "tooltip": "Timeout for the analysis. By default, this is set to \"240\"",
-                                "description": "Timeout for the analysis. By default, this is set to \"240\"",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            },
-                            {
-                                "title": "Locale",
-                                "name": "env_locale",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "text",
-                                "value": "en-US",
-                                "tooltip": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
-                                "description": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            },
-                            {
-                                "title": "Execute Command",
-                                "name": "obj_ext_cmd",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "text",
-                                "value": "",
-                                "tooltip": "Default value: <empty>",
-                                "description": "Command to execute",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            },
-                            {
-                                "title": "Network Connection State",
-                                "name": "opt_network_connect",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": true,
-                                "tooltip": "Default value: true",
-                                "description": "Network connection state",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            },
-                            {
-                                "title": "FakeNet Feature Status",
-                                "name": "opt_network_fakenet",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "FakeNet feature status",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            },
-                            {
-                                "title": "Geo Location",
-                                "name": "opt_network_geo",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "fastest",
-                                    "AU",
-                                    "BR",
-                                    "DE",
-                                    "CH",
-                                    "FR",
-                                    "KR",
-                                    "US",
-                                    "RU",
-                                    "GB",
-                                    "IT"
-                                ],
-                                "value": "fastest",
-                                "tooltip": "Default value: fastest",
-                                "description": "Geo location",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            },
-                            {
-                                "title": "HTTPS MITM Proxy",
-                                "name": "opt_network_mitm",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "HTTPS MITM Proxy option",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            },
-                            {
-                                "title": "Residential Proxy",
-                                "name": "opt_network_residential_proxy",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "Residential Proxy option",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            },
-                            {
-                                "title": "Residential Proxy Geo Location",
-                                "name": "opt_network_residential_proxy_geo",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "fastest",
-                                    "AU",
-                                    "BR",
-                                    "DE",
-                                    "CH",
-                                    "FR",
-                                    "KR",
-                                    "US",
-                                    "RU",
-                                    "GB",
-                                    "IT"
-                                ],
-                                "value": "fastest",
-                                "tooltip": "Default value: fastest",
-                                "description": "Residential Proxy Geo Location",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            },
-                            {
-                                "title": "TOR Using",
-                                "name": "opt_network_tor",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "TOR Using option",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            },
-                            {
-                                "title": "Privacy Setting",
-                                "name": "opt_privacy_type",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "public",
-                                    "bylink",
-                                    "owner",
-                                    "byteam"
-                                ],
-                                "value": "bylink",
-                                "tooltip": "Default value: bylink",
-                                "description": "Privacy setting",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            }
-                        ]
-                    }
-                }
-            ],
-            "open": false,
-            "output_schema": {
-                "error": "",
-                "data": {
-                    "task_uuid": ""
-                }
-            }
+        "private": {
+          "day": "",
+          "hour": "",
+          "month": "",
+          "minute": ""
         },
-        {
-            "operation": "detonate_url",
-            "title": "Detonate URL",
-            "description": "Detonates a URL in ANY.RUN Sandbox based on the indicator IRI you have specified.",
-            "category": "investigation",
-            "annotation": "detonate_url",
-            "enabled": true,
-            "parameters": [
-                {
-                    "title": "URL",
-                    "type": "text",
-                    "name": "obj_url",
-                    "required": true,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "URL to detonate in ANY.RUN."
-                },
-                {
-                    "title": "Operating system",
-                    "type": "select",
-                    "name": "operationSystem",
-                    "required": true,
-                    "visible": true,
-                    "editable": true,
-                    "options": [
-                        "Windows",
-                        "Linux",
-                        "Android"
-                    ],
-                    "onchange": {
-                        "Windows": [
-                            {
-                                "title": "Timeout",
-                                "name": "opt_timeout",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "text",
-                                "value": "120",
-                                "tooltip": "Timeout for the analysis. By default, this is set to \"120\"",
-                                "description": "Timeout for the analysis. By default, this is set to \"120\"",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "Bitness",
-                                "name": "env_bitness",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "32",
-                                    "64"
-                                ],
-                                "value": "64",
-                                "tooltip": "Bitness of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"64\". The allowed values are \"32\" and \"64\"",
-                                "description": "Bitness of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"64\". The allowed values are \"32\" and \"64\"",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "Locale",
-                                "name": "env_locale",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "text",
-                                "value": "en-US",
-                                "tooltip": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
-                                "description": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "ENV Type",
-                                "name": "env_type",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "clean",
-                                    "office",
-                                    "complete"
-                                ],
-                                "value": "complete",
-                                "tooltip": "Environment preset type",
-                                "description": "Type of the operating system (Default: complete)",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "ENV Version",
-                                "name": "env_version",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "'7'",
-                                    "'10'",
-                                    "'11'"
-                                ],
-                                "value": "'10'",
-                                "tooltip": "Version of the operating system (Default: 10)",
-                                "description": "Version of the operating system (Default: 10)",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "Browser",
-                                "name": "obj_ext_browser",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "Microsoft Edge",
-                                    "Google Chrome",
-                                    "Mozilla Firefox",
-                                    "Internet Explorer"
-                                ],
-                                "value": "Microsoft Edge",
-                                "tooltip": "Default value: Microsoft Edge",
-                                "description": "Browser to use",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "Extension to use",
-                                "name": "obj_ext_extension",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": true,
-                                "tooltip": "Default value: true",
-                                "description": "Extension to use",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "Network Connection State",
-                                "name": "opt_network_connect",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": true,
-                                "tooltip": "Default value: true",
-                                "description": "Network connection state",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "FakeNet Feature Status",
-                                "name": "opt_network_fakenet",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "FakeNet feature status",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "Geo Location",
-                                "name": "opt_network_geo",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "fastest",
-                                    "AU",
-                                    "BR",
-                                    "DE",
-                                    "CH",
-                                    "FR",
-                                    "KR",
-                                    "US",
-                                    "RU",
-                                    "GB",
-                                    "IT"
-                                ],
-                                "value": "fastest",
-                                "tooltip": "Default value: fastest",
-                                "description": "Geo location",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "HTTPS MITM Proxy",
-                                "name": "opt_network_mitm",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "HTTPS MITM Proxy option",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "Residential Proxy",
-                                "name": "opt_network_residential_proxy",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "Residential Proxy option",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "Residential Proxy Geo Location",
-                                "name": "opt_network_residential_proxy_geo",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "fastest",
-                                    "AU",
-                                    "BR",
-                                    "DE",
-                                    "CH",
-                                    "FR",
-                                    "KR",
-                                    "US",
-                                    "RU",
-                                    "GB",
-                                    "IT"
-                                ],
-                                "value": "fastest",
-                                "tooltip": "Default value: fastest",
-                                "description": "Residential Proxy Geo Location",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "TOR Using",
-                                "name": "opt_network_tor",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "TOR Using option",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            },
-                            {
-                                "title": "Privacy Setting",
-                                "name": "opt_privacy_type",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "public",
-                                    "bylink",
-                                    "owner",
-                                    "byteam"
-                                ],
-                                "value": "bylink",
-                                "tooltip": "Default value: bylink",
-                                "description": "Privacy setting",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Windows"
-                            }
-                        ],
-                        "Linux": [
-                            {
-                                "title": "Timeout",
-                                "name": "opt_timeout",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "text",
-                                "value": "120",
-                                "tooltip": "Timeout for the analysis. By default, this is set to \"120\"",
-                                "description": "Timeout for the analysis. By default, this is set to \"120\"",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "Environment",
-                                "name": "env_os",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "ubuntu",
-                                    "debian"
-                                ],
-                                "value": "ubuntu",
-                                "tooltip": "Operating System",
-                                "description": "Operating System",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "Browser",
-                                "name": "obj_ext_browser",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "Google Chrome",
-                                    "Mozilla Firefox"
-                                ],
-                                "value": "Google Chrome",
-                                "tooltip": "Default value: Google Chrome",
-                                "description": "Browser to use",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "Extension to use",
-                                "name": "obj_ext_extension",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": true,
-                                "tooltip": "Default value: true",
-                                "description": "Extension to use",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "Network Connection State",
-                                "name": "opt_network_connect",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": true,
-                                "tooltip": "Default value: true",
-                                "description": "Network connection state",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "FakeNet Feature Status",
-                                "name": "opt_network_fakenet",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "FakeNet feature status",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "Geo Location",
-                                "name": "opt_network_geo",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "fastest",
-                                    "AU",
-                                    "BR",
-                                    "DE",
-                                    "CH",
-                                    "FR",
-                                    "KR",
-                                    "US",
-                                    "RU",
-                                    "GB",
-                                    "IT"
-                                ],
-                                "value": "fastest",
-                                "tooltip": "Default value: fastest",
-                                "description": "Geo location",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "HTTPS MITM Proxy",
-                                "name": "opt_network_mitm",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "HTTPS MITM Proxy option",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "Residential Proxy",
-                                "name": "opt_network_residential_proxy",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "Residential Proxy option",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "Residential Proxy Geo Location",
-                                "name": "opt_network_residential_proxy_geo",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "fastest",
-                                    "AU",
-                                    "BR",
-                                    "DE",
-                                    "CH",
-                                    "FR",
-                                    "KR",
-                                    "US",
-                                    "RU",
-                                    "GB",
-                                    "IT"
-                                ],
-                                "value": "fastest",
-                                "tooltip": "Default value: fastest",
-                                "description": "Residential Proxy Geo Location",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "TOR Using",
-                                "name": "opt_network_tor",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "TOR Using option",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            },
-                            {
-                                "title": "Privacy Setting",
-                                "name": "opt_privacy_type",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "public",
-                                    "bylink",
-                                    "owner",
-                                    "byteam"
-                                ],
-                                "value": "bylink",
-                                "tooltip": "Default value: bylink",
-                                "description": "Privacy setting",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Linux"
-                            }
-                        ],
-                        "Android": [
-                            {
-                                "title": "Timeout",
-                                "name": "opt_timeout",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "text",
-                                "value": "120",
-                                "tooltip": "Timeout for the analysis. By default, this is set to \"120\"",
-                                "description": "Timeout for the analysis. By default, this is set to \"120\"",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            },
-                            {
-                                "title": "Locale",
-                                "name": "env_locale",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "text",
-                                "value": "en-US",
-                                "tooltip": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
-                                "description": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            },
-                            {
-                                "title": "Network Connection State",
-                                "name": "opt_network_connect",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": true,
-                                "tooltip": "Default value: true",
-                                "description": "Network connection state",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            },
-                            {
-                                "title": "FakeNet Feature Status",
-                                "name": "opt_network_fakenet",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "FakeNet feature status",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            },
-                            {
-                                "title": "Geo Location",
-                                "name": "opt_network_geo",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "fastest",
-                                    "AU",
-                                    "BR",
-                                    "DE",
-                                    "CH",
-                                    "FR",
-                                    "KR",
-                                    "US",
-                                    "RU",
-                                    "GB",
-                                    "IT"
-                                ],
-                                "value": "fastest",
-                                "tooltip": "Default value: fastest",
-                                "description": "Geo location",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            },
-                            {
-                                "title": "HTTPS MITM Proxy",
-                                "name": "opt_network_mitm",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "HTTPS MITM Proxy option",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            },
-                            {
-                                "title": "Residential Proxy",
-                                "name": "opt_network_residential_proxy",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "Residential Proxy option",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            },
-                            {
-                                "title": "Residential Proxy Geo Location",
-                                "name": "opt_network_residential_proxy_geo",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "fastest",
-                                    "AU",
-                                    "BR",
-                                    "DE",
-                                    "CH",
-                                    "FR",
-                                    "KR",
-                                    "US",
-                                    "RU",
-                                    "GB",
-                                    "IT"
-                                ],
-                                "value": "fastest",
-                                "tooltip": "Default value: fastest",
-                                "description": "Residential Proxy Geo Location",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            },
-                            {
-                                "title": "TOR Using",
-                                "name": "opt_network_tor",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "checkbox",
-                                "value": false,
-                                "tooltip": "Default value: false",
-                                "description": "TOR Using option",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            },
-                            {
-                                "title": "Privacy Setting",
-                                "name": "opt_privacy_type",
-                                "visible": true,
-                                "required": false,
-                                "editable": true,
-                                "type": "select",
-                                "options": [
-                                    "public",
-                                    "bylink",
-                                    "owner",
-                                    "byteam"
-                                ],
-                                "value": "bylink",
-                                "tooltip": "Default value: bylink",
-                                "description": "Privacy setting",
-                                "isOnChange": true,
-                                "onChangeParam": "Operation system",
-                                "onChangeOption": "Android"
-                            }
-                        ]
-                    }
-                }
-            ],
-            "open": false,
-            "output_schema": {
-                "error": "",
-                "data": {
-                    "task_uuid": ""
-                }
-            }
-        },
-        {
-            "operation": "get_user_history",
-            "title": "Get History",
-            "description": "Retrieves analysis history from ANY.RUN Sandbox based on input parameters you have specified.",
-            "category": "investigation",
-            "annotation": "get_user_history",
-            "enabled": true,
-            "parameters": [
-                {
-                    "title": "Team",
-                    "type": "checkbox",
-                    "name": "team",
-                    "required": false,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Select this checkbox and specify the team to retrieve the history of the team. if you leave the checkbox cleared (default), then your history is retrieved"
-                },
-                {
-                    "title": "Skip",
-                    "type": "text",
-                    "name": "skip",
-                    "required": false,
-                    "visible": true,
-                    "editable": true,
-                    "value": "0",
-                    "tooltip": "The number of results that this operation should skip. By default, this is set to \"0\""
-                },
-                {
-                    "title": "Limit",
-                    "type": "text",
-                    "name": "limit",
-                    "required": false,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "Maximum number of items that this operation should return in a single search. By default, this is set to \"25\". You can specify any number between 1-100."
-                }
-            ],
-            "open": false,
-            "output_schema": {
-                "error": "",
-                "data": {
-                    "tasks": [
-                        {
-                            "verdict": "",
-                            "name": "",
-                            "related": "",
-                            "pcap": "",
-                            "file": "",
-                            "json": "",
-                            "misp": "",
-                            "tags": [],
-                            "date": "",
-                            "hashes": {
-                                "ssdeep": "",
-                                "head_hash": "",
-                                "sha256": "",
-                                "sha1": "",
-                                "md5": ""
-                            }
-                        }
-                    ]
-                }
-            }
-        },
-        {
-            "operation": "get_report",
-            "title": "Get Report",
-            "description": "Fetches the analysis report from ANY.RUN using the provided Analysis ID. This ID is automatically generated when a new analysis is submitted.",
-            "category": "investigation",
-            "annotation": "get_report",
-            "enabled": true,
-            "parameters": [
-                {
-                    "title": "Analysis ID",
-                    "type": "text",
-                    "name": "task_uuid",
-                    "required": true,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "UUID of analysis"
-                },
-                {
-                    "title": "Report Type",
-                    "type": "select",
-                    "name": "report_type",
-                    "required": false,
-                    "visible": true,
-                    "editable": true,
-                    "value": "summary",
-                    "tooltip": "Default value: summary",
-                    "options": [
-                        "summary",
-                        "ioc",
-                        "stix",
-                        "misp",
-                        "html"
-                    ]
-                }
-            ],
-            "open": false,
-            "output_schema": {
-                "error": "",
-                "data": {
-                    "analysis": {
-                        "uuid": "",
-                        "permanentUrl": "",
-                        "reports": {
-                            "IOC": "",
-                            "MISP": "",
-                            "HTML": "",
-                            "graph": ""
-                        },
-                        "sandbox": {
-                            "name": "",
-                            "plan": {
-                                "name": ""
-                            }
-                        },
-                        "duration": "",
-                        "creation": "",
-                        "creationText": "",
-                        "tags": [],
-                        "options": {
-                            "timeout": "",
-                            "additionalTime": "",
-                            "fakeNet": "",
-                            "heavyEvasion": "",
-                            "mitm": "",
-                            "tor": {
-                                "used": "",
-                                "geo": ""
-                            },
-                            "presentation": "",
-                            "video": "",
-                            "hideSource": "",
-                            "network": "",
-                            "privacy": "",
-                            "privateSample": "",
-                            "automatization": {
-                                "uac": ""
-                            }
-                        },
-                        "scores": {
-                            "verdict": {
-                                "score": "",
-                                "threatLevel": "",
-                                "threatLevelText": ""
-                            },
-                            "specs": {
-                                "injects": "",
-                                "autostart": "",
-                                "cpuOverrun": "",
-                                "crashedApps": "",
-                                "crashedTask": "",
-                                "debugOutput": "",
-                                "executableDropped": "",
-                                "exploitable": "",
-                                "lowAccess": "",
-                                "memOverrun": "",
-                                "multiprocessing": "",
-                                "networkLoader": "",
-                                "networkThreats": "",
-                                "rebooted": "",
-                                "serviceLauncher": "",
-                                "spam": "",
-                                "staticDetections": "",
-                                "stealing": "",
-                                "suspStruct": "",
-                                "torUsed": "",
-                                "privEscalation": "",
-                                "notStarted": ""
-                            }
-                        },
-                        "content": {
-                            "mainObject": {
-                                "type": "",
-                                "permanentUrl": "",
-                                "filename": "",
-                                "hashes": {
-                                    "md5": "",
-                                    "sha1": "",
-                                    "sha256": "",
-                                    "ssdeep": ""
-                                },
-                                "info": {
-                                    "ext": "",
-                                    "file": "",
-                                    "mime": "",
-                                    "exif": {
-                                        "ZIP": {
-                                            "ZipRequiredVersion": "",
-                                            "ZipBitFlag": "",
-                                            "ZipCompression": "",
-                                            "ZipModifyDate": "",
-                                            "ZipCRC": "",
-                                            "ZipCompressedSize": "",
-                                            "ZipUncompressedSize": "",
-                                            "ZipFileName": ""
-                                        }
-                                    },
-                                    "trid": [
-                                        {
-                                            "procent": "",
-                                            "extension": "",
-                                            "filetype": ""
-                                        }
-                                    ]
-                                }
-                            },
-                            "video": {
-                                "present": ""
-                            },
-                            "pcap": {
-                                "present": "",
-                                "permanentUrl": ""
-                            },
-                            "screenshot": [
-                                {
-                                    "uuid": "",
-                                    "time": "",
-                                    "permanentUrl": "",
-                                    "thumbnailUrl": ""
-                                }
-                            ]
-                        }
-                    },
-                    "environments": {
-                        "os": {
-                            "title": "",
-                            "build": "",
-                            "product": "",
-                            "variant": "",
-                            "productType": "",
-                            "major": "",
-                            "servicePack": "",
-                            "softSet": "",
-                            "bitness": ""
-                        },
-                        "internetExplorer": {
-                            "version": "",
-                            "kbnum": ""
-                        },
-                        "software": [
-                            {
-                                "title": "",
-                                "version": ""
-                            }
-                        ],
-                        "hotfixes": [
-                            {
-                                "title": ""
-                            }
-                        ]
-                    },
-                    "processes": [
-                        {
-                            "pid": "",
-                            "ppid": "",
-                            "uuid": "",
-                            "image": "",
-                            "commandLine": "",
-                            "fileName": "",
-                            "fileType": "",
-                            "mainProcess": "",
-                            "times": {
-                                "start": "",
-                                "monitoringSince": ""
-                            },
-                            "versionInfo": {
-                                "company": "",
-                                "description": "",
-                                "version": ""
-                            },
-                            "context": {
-                                "rebootNumber": "",
-                                "integrityLevel": "",
-                                "userName": ""
-                            },
-                            "scores": {
-                                "verdict": {
-                                    "score": "",
-                                    "threatLevel": "",
-                                    "threatLevelText": ""
-                                },
-                                "monitoringReason": "",
-                                "dropped": "",
-                                "injected": "",
-                                "loadsSusp": "",
-                                "specs": {
-                                    "autoStart": "",
-                                    "crashedApps": "",
-                                    "debugOutput": "",
-                                    "executableDropped": "",
-                                    "exploitable": "",
-                                    "injects": "",
-                                    "knownThreat": "",
-                                    "lowAccess": "",
-                                    "network": "",
-                                    "networkLoader": "",
-                                    "stealing": "",
-                                    "privEscalation": ""
-                                }
-                            },
-                            "status": "",
-                            "modules": [
-                                {
-                                    "time": "",
-                                    "image": ""
-                                }
-                            ]
-                        }
-                    ],
-                    "modified": {
-                        "files": [
-                            {
-                                "time": "",
-                                "filename": "",
-                                "size": "",
-                                "type": "",
-                                "threatLevel": "",
-                                "process": "",
-                                "info": {
-                                    "file": ""
-                                },
-                                "hashes": {
-                                    "head_hash": "",
-                                    "md5": "",
-                                    "sha1": "",
-                                    "sha256": "",
-                                    "ssdeep": ""
-                                },
-                                "permanentUrl": ""
-                            }
-                        ],
-                        "registry": [
-                            {
-                                "key": "",
-                                "name": "",
-                                "value": "",
-                                "operation": "",
-                                "process": "",
-                                "time": ""
-                            }
-                        ]
-                    },
-                    "network": {
-                        "dnsRequests": [],
-                        "httpRequests": [],
-                        "connections": [],
-                        "threats": []
-                    },
-                    "debugStrings": [],
-                    "incidents": [
-                        {
-                            "threatLevel": "",
-                            "title": "",
-                            "desc": "",
-                            "source": "",
-                            "firstSeen": "",
-                            "count": "",
-                            "mitre": [],
-                            "events": [],
-                            "process": ""
-                        }
-                    ],
-                    "counters": {
-                        "processes": {
-                            "total": "",
-                            "monitored": "",
-                            "suspicious": "",
-                            "malicious": ""
-                        },
-                        "network": {
-                            "http": "",
-                            "connections": "",
-                            "dns": "",
-                            "threats": ""
-                        },
-                        "files": {
-                            "unknown": 3,
-                            "text": 1,
-                            "suspicious": 0,
-                            "malicious": 0
-                        },
-                        "registry": {
-                            "total": "",
-                            "read": "",
-                            "write": "",
-                            "delete": ""
-                        }
-                    },
-                    "mitre": [
-                        {
-                            "id": "",
-                            "phases": [],
-                            "name": ""
-                        }
-                    ],
-                    "status": ""
-                }
-            }
-        },
-        {
-            "operation": "get_report_attachments",
-            "title": "Get Report Attachments",
-            "description": "Retrieve the analysis report from ANY.RUN Sandbox as attachment in JSON, HTML format using the provided Analysis ID. This ID is automatically generated when a new analysis is submitted.",
-            "category": "investigation",
-            "annotation": "get_report_attachments",
-            "enabled": true,
-            "parameters": [
-                {
-                    "title": "Analysis ID",
-                    "type": "text",
-                    "name": "task_uuid",
-                    "required": true,
-                    "visible": true,
-                    "editable": true,
-                    "tooltip": "UUID of analysis"
-                },
-                {
-                    "title": "Report Type",
-                    "type": "select",
-                    "name": "report_type",
-                    "required": false,
-                    "visible": true,
-                    "editable": true,
-                    "value": "summary",
-                    "tooltip": "Default value: summary",
-                    "options": [
-                        "summary",
-                        "ioc",
-                        "stix",
-                        "misp",
-                        "html"
-                    ]
-                }
-            ],
-            "open": false,
-            "output_schema": ""
-        },
-        {
-            "operation": "get_user_limits",
-            "title": "Get User Limits",
-            "description": "Retrieves the request limits of the authenticated user, according to the subscribed plan, from ANY.RUN.",
-            "category": "investigation",
-            "annotation": "get_user_limits",
-            "enabled": true,
-            "parameters": [],
-            "open": false,
-            "output_schema": {
-                "data": {
-                    "limits": {
-                        "api": {
-                            "day": "",
-                            "hour": "",
-                            "month": "",
-                            "minute": ""
-                        },
-                        "web": {
-                            "day": "",
-                            "hour": "",
-                            "month": "",
-                            "minute": ""
-                        },
-                        "parallels": {
-                            "total": "",
-                            "available": ""
-                        }
-                    }
-                },
-                "error": ""
-            }
+        "parallels": {
+          "total": "",
+          "available": ""
         }
-    ],
-    "category": [
-        "Malware Analysis",
-        "Sandbox"
-    ],
-    "contributor": null,
-    "active": true,
-    "cs_compatible": true,
-    "system": false,
-    "icon_small": "",
-    "icon_large": "",
-    "help_online": "https://github.com/fortinet-fortisoar/connector-anyrun",
-    "vendor_version": null
+      }
+    },
+    {
+      "operation": "get_user_history",
+      "title": "Get History",
+      "description": "Retrieve analysis history from ANY.RUN Cloud Sandbox based on the specified parameters.",
+      "category": "investigation",
+      "annotation": "get_user_history",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Team",
+          "description": "Select this checkbox and specify the team to retrieve that team's history. If you leave the checkbox cleared (default), then your history is retrieved.",
+          "type": "checkbox",
+          "name": "team",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Select this checkbox and specify the team to retrieve that team's history. If you leave the checkbox cleared (default), then your history is retrieved."
+        },
+        {
+          "title": "Skip",
+          "description": "The number of results that this operation should skip. By default, this is set to \"0\".",
+          "type": "text",
+          "name": "skip",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "value": "0",
+          "tooltip": "The number of results that this operation should skip. By default, this is set to \"0\"."
+        },
+        {
+          "title": "Limit",
+          "description": "The maximum number of items that this operation should return in a single search. By default, this is set to \"25\". You can specify any number between 1-100.",
+          "type": "text",
+          "name": "limit",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "The maximum number of items that this operation should return in a single search. By default, this is set to \"25\". You can specify any number between 1-100."
+        }
+      ],
+      "open": false,
+      "output_schema": {
+        "error": "",
+        "data": {
+          "tasks": [
+            {
+              "verdict": "",
+              "name": "",
+              "related": "",
+              "pcap": "",
+              "file": "",
+              "json": "",
+              "misp": "",
+              "tags": [],
+              "date": "",
+              "hashes": {
+                "ssdeep": "",
+                "head_hash": "",
+                "sha256": "",
+                "sha1": "",
+                "md5": ""
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "operation": "detonate_file",
+      "title": "Detonate File",
+      "description": "Submit a file to ANY.RUN Cloud Sandbox for dynamic analysis using the specified attachment or indicator IRI.",
+      "category": "investigation",
+      "annotation": "detonate_file",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Attachment IRI",
+          "description": "Specify the IRI of the indicator or attachment to be submitted for detonation in ANY.RUN Cloud Sandbox.",
+          "type": "text",
+          "name": "attachment_iri",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Specify the IRI of the indicator or attachment to be submitted for detonation in ANY.RUN Cloud Sandbox."
+        },
+        {
+          "title": "Operating System",
+          "description": "Select the operating system environment in which the file will be executed. Possible values are Windows, Linux, or Android.",
+          "type": "select",
+          "name": "operationSystem",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Select the operating system environment in which the file will be executed. Possible values are Windows, Linux, or Android.",
+          "options": [
+            "Windows",
+            "Linux",
+            "Android"
+          ],
+          "onchange": {
+            "Windows": [
+              {
+                "title": "Timeout",
+                "name": "opt_timeout",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "text",
+                "value": "240",
+                "tooltip": "Specify the duration of the analysis in seconds. By default, this is set to \"240\"",
+                "description": "Specify how long the analysis should run. By default, this is set to \"240\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "Bitness",
+                "name": "env_bitness",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "32",
+                  "64"
+                ],
+                "value": "64",
+                "tooltip": "Bitness of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"64\". The allowed values are \"32\" and \"64\"",
+                "description": "Bitness of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"64\". The allowed values are \"32\" and \"64\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "Locale",
+                "name": "env_locale",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "text",
+                "value": "en-US",
+                "tooltip": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
+                "description": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "ENV Type",
+                "name": "env_type",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "clean",
+                  "office",
+                  "complete"
+                ],
+                "value": "complete",
+                "description": "Preconfigured system profile (clean, office, or complete). By default, this is set to \"complete\"",
+                "tooltip": "Select the Windows environment profile. By default, this is set to \"complete\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "ENV Version",
+                "name": "env_version",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "'7'",
+                  "'10'",
+                  "'11'"
+                ],
+                "value": "'10'",
+                "description": "Windows OS version to use for analysis (7, 10, or 11). By default, this is set to \"10\"",
+                "tooltip": "Select the Windows version for the sandbox. By default, this is set to \"10\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "Force Elevation",
+                "name": "obj_force_elevation",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable to execute the file with administrative privileges. By default, this is set to \"False\"",
+                "description": "Run the sample with elevated privileges. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "Start Folder",
+                "name": "obj_ext_startfolder",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "desktop",
+                  "home",
+                  "downloads",
+                  "appdata",
+                  "temp",
+                  "windows",
+                  "root"
+                ],
+                "value": "temp",
+                "tooltip": "Select the folder from which the file will be executed. By default, this is set to \"temp\"",
+                "description": "Initial execution directory inside the sandbox. By default, this is set to \"temp\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "Execute Command",
+                "name": "obj_ext_cmd",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "text",
+                "value": "",
+                "tooltip": "Specify additional execution parameters if required.",
+                "description": "Custom command-line arguments or execution command.",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "Extension to Use",
+                "name": "obj_ext_extension",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": true,
+                "tooltip": "Select the extension to use. By default, this is set to \"True\"",
+                "description": "Select the extension to use. By default, this is set to \"True\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "Network Connection State",
+                "name": "opt_network_connect",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": true,
+                "tooltip": "Toggle network access for the sandbox session. By default, this is set to \"True\"",
+                "description": "Enable or disable internet connectivity during analysis. By default, this is set to \"True\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "FakeNet Feature Status",
+                "name": "opt_network_fakenet",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable FakeNet to simulate network responses. By default, this is set to \"False\"",
+                "description": "Enable simulated network services to capture network activity. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "Geo Location",
+                "name": "opt_network_geo",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "fastest",
+                  "AU",
+                  "BR",
+                  "DE",
+                  "CH",
+                  "FR",
+                  "KR",
+                  "US",
+                  "RU",
+                  "GB",
+                  "IT"
+                ],
+                "value": "fastest",
+                "tooltip": "Select the geographic region for network routing. By default, this is set to \"fastest\"",
+                "description": "Network geolocation for the sandbox environment. By default, this is set to \"fastest\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "HTTPS MITM Proxy",
+                "name": "opt_network_mitm",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable HTTPS MITM proxy for encrypted traffic analysis. By default, this is set to \"False\"",
+                "description": "Enable HTTPS interception for traffic inspection. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "Residential Proxy",
+                "name": "opt_network_residential_proxy",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable residential proxy routing. By default, this is set to \"False\"",
+                "description": "Route traffic through a residential proxy. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "Residential Proxy Geo Location",
+                "name": "opt_network_residential_proxy_geo",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "fastest",
+                  "AU",
+                  "BR",
+                  "DE",
+                  "CH",
+                  "FR",
+                  "KR",
+                  "US",
+                  "RU",
+                  "GB",
+                  "IT"
+                ],
+                "value": "fastest",
+                "tooltip": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
+                "description": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "TOR Using",
+                "name": "opt_network_tor",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable TOR network routing. By default, this is set to \"False\"",
+                "description": "Route network traffic through the TOR network. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "Privacy Setting",
+                "name": "opt_privacy_type",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "public",
+                  "bylink",
+                  "owner",
+                  "byteam"
+                ],
+                "value": "bylink",
+                "tooltip": "Define who can access the analysis results. By default, this is set to \"bylink\"",
+                "description": "Visibility level of the analysis (public, by link, owner-only, or team-only). By default, this is set to \"bylink\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              }
+            ],
+            "Linux": [
+              {
+                "title": "Timeout",
+                "name": "opt_timeout",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "text",
+                "value": "240",
+                "tooltip": "Specify the duration of the analysis in seconds. By default, this is set to \"240\"",
+                "description": "Specify how long the analysis should run. By default, this is set to \"240\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "Locale",
+                "name": "env_locale",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "text",
+                "value": "en-US",
+                "tooltip": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
+                "description": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "Environment",
+                "name": "env_os",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "ubuntu",
+                  "debian"
+                ],
+                "value": "ubuntu",
+                "tooltip": "Select the operating system for the sandbox. By default, this is set to \"ubuntu\"",
+                "description": "Select the operating system for the sandbox. By default, this is set to \"ubuntu\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "Start Folder",
+                "name": "obj_ext_startfolder",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "desktop",
+                  "home",
+                  "downloads",
+                  "temp",
+                  "root"
+                ],
+                "value": "temp",
+                "tooltip": "Select the folder from which the file will be executed. By default, this is set to \"temp\"",
+                "description": "Initial execution directory inside the sandbox. By default, this is set to \"temp\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "Execute Command",
+                "name": "obj_ext_cmd",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "text",
+                "value": "",
+                "tooltip": "Specify additional execution parameters if required.",
+                "description": "Custom command-line arguments or execution command.",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "Extension to Use",
+                "name": "obj_ext_extension",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": true,
+                "tooltip": "Select the extension to use. By default, this is set to \"True\"",
+                "description": "Select the extension to use. By default, this is set to \"True\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "Network Connection State",
+                "name": "opt_network_connect",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": true,
+                "tooltip": "Toggle network access for the sandbox session. By default, this is set to \"True\"",
+                "description": "Enable or disable internet connectivity during analysis. By default, this is set to \"True\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "FakeNet Feature Status",
+                "name": "opt_network_fakenet",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable FakeNet to simulate network responses. By default, this is set to \"False\"",
+                "description": "Enable simulated network services to capture network activity. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "Geo Location",
+                "name": "opt_network_geo",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "fastest",
+                  "AU",
+                  "BR",
+                  "DE",
+                  "CH",
+                  "FR",
+                  "KR",
+                  "US",
+                  "RU",
+                  "GB",
+                  "IT"
+                ],
+                "value": "fastest",
+                "tooltip": "Select the geographic region for network routing. By default, this is set to \"fastest\"",
+                "description": "Network geolocation for the sandbox environment. By default, this is set to \"fastest\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "HTTPS MITM Proxy",
+                "name": "opt_network_mitm",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable HTTPS MITM proxy for encrypted traffic analysis. By default, this is set to \"False\"",
+                "description": "Enable HTTPS interception for traffic inspection. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "Residential Proxy",
+                "name": "opt_network_residential_proxy",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable residential proxy routing. By default, this is set to \"False\"",
+                "description": "Route traffic through a residential proxy. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "Residential Proxy Geo Location",
+                "name": "opt_network_residential_proxy_geo",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "fastest",
+                  "AU",
+                  "BR",
+                  "DE",
+                  "CH",
+                  "FR",
+                  "KR",
+                  "US",
+                  "RU",
+                  "GB",
+                  "IT"
+                ],
+                "value": "fastest",
+                "tooltip": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
+                "description": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "TOR Using",
+                "name": "opt_network_tor",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable TOR network routing. By default, this is set to \"False\"",
+                "description": "Route network traffic through the TOR network. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "Privacy Setting",
+                "name": "opt_privacy_type",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "public",
+                  "bylink",
+                  "owner",
+                  "byteam"
+                ],
+                "value": "bylink",
+                "tooltip": "Define who can access the analysis results. By default, this is set to \"bylink\"",
+                "description": "Visibility level of the analysis (public, by link, owner-only, or team-only). By default, this is set to \"bylink\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "Run as Root",
+                "name": "run_as_root",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enabled to run as root. By default, this is set to \"False\"",
+                "description": "Enabled to run as root. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              }
+            ],
+            "Android": [
+              {
+                "title": "Timeout",
+                "name": "opt_timeout",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "text",
+                "value": "240",
+                "tooltip": "Specify the duration of the analysis in seconds. By default, this is set to \"240\"",
+                "description": "Specify how long the analysis should run. By default, this is set to \"240\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              },
+              {
+                "title": "Locale",
+                "name": "env_locale",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "text",
+                "value": "en-US",
+                "tooltip": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
+                "description": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              },
+              {
+                "title": "Execute Command",
+                "name": "obj_ext_cmd",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "text",
+                "value": "",
+                "tooltip": "Specify additional execution parameters if required.",
+                "description": "Custom command-line arguments or execution command.",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              },
+              {
+                "title": "Network Connection State",
+                "name": "opt_network_connect",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": true,
+                "tooltip": "Toggle network access for the sandbox session. By default, this is set to \"True\"",
+                "description": "Enable or disable internet connectivity during analysis. By default, this is set to \"True\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              },
+              {
+                "title": "FakeNet Feature Status",
+                "name": "opt_network_fakenet",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable FakeNet to simulate network responses. By default, this is set to \"False\"",
+                "description": "Enable simulated network services to capture network activity. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              },
+              {
+                "title": "Geo Location",
+                "name": "opt_network_geo",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "fastest",
+                  "AU",
+                  "BR",
+                  "DE",
+                  "CH",
+                  "FR",
+                  "KR",
+                  "US",
+                  "RU",
+                  "GB",
+                  "IT"
+                ],
+                "value": "fastest",
+                "tooltip": "Select the geographic region for network routing. By default, this is set to \"fastest\"",
+                "description": "Network geolocation for the sandbox environment. By default, this is set to \"fastest\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              },
+              {
+                "title": "HTTPS MITM Proxy",
+                "name": "opt_network_mitm",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable HTTPS MITM proxy for encrypted traffic analysis. By default, this is set to \"False\"",
+                "description": "Enable HTTPS interception for traffic inspection. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              },
+              {
+                "title": "Residential Proxy",
+                "name": "opt_network_residential_proxy",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable residential proxy routing. By default, this is set to \"False\"",
+                "description": "Route traffic through a residential proxy. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              },
+              {
+                "title": "Residential Proxy Geo Location",
+                "name": "opt_network_residential_proxy_geo",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "fastest",
+                  "AU",
+                  "BR",
+                  "DE",
+                  "CH",
+                  "FR",
+                  "KR",
+                  "US",
+                  "RU",
+                  "GB",
+                  "IT"
+                ],
+                "value": "fastest",
+                "tooltip": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
+                "description": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              },
+              {
+                "title": "TOR Using",
+                "name": "opt_network_tor",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable TOR network routing. By default, this is set to \"False\"",
+                "description": "Route network traffic through the TOR network. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              },
+              {
+                "title": "Privacy Setting",
+                "name": "opt_privacy_type",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "public",
+                  "bylink",
+                  "owner",
+                  "byteam"
+                ],
+                "value": "bylink",
+                "tooltip": "Define who can access the analysis results. By default, this is set to \"bylink\"",
+                "description": "Visibility level of the analysis (public, by link, owner-only, or team-only). By default, this is set to \"bylink\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              }
+            ]
+          }
+        }
+      ],
+      "open": false,
+      "output_schema": {
+        "error": "",
+        "data": {
+          "task_uuid": ""
+        }
+      }
+    },
+    {
+      "operation": "detonate_url",
+      "title": "Detonate URL",
+      "description": "Submit a URL to ANY.RUN Cloud Sandbox for dynamic analysis in the selected operating system environment based on the input parameters that you specified.",
+      "category": "investigation",
+      "annotation": "detonate_url",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "URL",
+          "description": "Specify the URL to be analyzed in ANY.RUN Cloud Sandbox.",
+          "type": "text",
+          "name": "obj_url",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Specify the URL to be analyzed in ANY.RUN Cloud Sandbox."
+        },
+        {
+          "title": "Operating System",
+          "description": "Select the operating system environment in which the URL will be executed. Possible values are Windows, Linux, or Android",
+          "type": "select",
+          "name": "operationSystem",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "options": [
+            "Windows",
+            "Linux",
+            "Android"
+          ],
+          "tooltip": "Select the operating system environment in which the URL will be executed. Possible values are Windows, Linux, or Android",
+          "onchange": {
+            "Windows": [
+              {
+                "title": "Timeout",
+                "name": "opt_timeout",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "text",
+                "value": "120",
+                "tooltip": "Specify the duration of the analysis in seconds. By default, this is set to \"120\"",
+                "description": "Specify how long the analysis should run. By default, this is set to \"120\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "Bitness",
+                "name": "env_bitness",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "32",
+                  "64"
+                ],
+                "value": "64",
+                "tooltip": "Bitness of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"64\". The allowed values are \"32\" and \"64\"",
+                "description": "Bitness of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"64\". The allowed values are \"32\" and \"64\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "Locale",
+                "name": "env_locale",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "text",
+                "value": "en-US",
+                "tooltip": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
+                "description": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "ENV Type",
+                "name": "env_type",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "clean",
+                  "office",
+                  "complete"
+                ],
+                "value": "complete",
+                "description": "Preconfigured system profile (clean, office, or complete). By default, this is set to \"complete\"",
+                "tooltip": "Select the Windows environment profile. By default, this is set to \"complete\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "ENV Version",
+                "name": "env_version",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "'7'",
+                  "'10'",
+                  "'11'"
+                ],
+                "value": "'10'",
+                "description": "Windows OS version to use for analysis (7, 10, or 11). By default, this is set to \"10\"",
+                "tooltip": "Select the Windows version for the sandbox. By default, this is set to \"10\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "Browser",
+                "name": "obj_ext_browser",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "Microsoft Edge",
+                  "Google Chrome",
+                  "Mozilla Firefox",
+                  "Internet Explorer"
+                ],
+                "value": "Microsoft Edge",
+                "tooltip": "Select the browser to use. By default, this is set to \"Microsoft Edge\"",
+                "description": "Select the browser to use. By default, this is set to \"Microsoft Edge\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "Extension to Use",
+                "name": "obj_ext_extension",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": true,
+                "tooltip": "Select the extension to use. By default, this is set to \"True\"",
+                "description": "Select the extension to use. By default, this is set to \"True\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "Network Connection State",
+                "name": "opt_network_connect",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": true,
+                "tooltip": "Toggle network access for the sandbox session. By default, this is set to \"True\"",
+                "description": "Enable or disable internet connectivity during analysis. By default, this is set to \"True\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "FakeNet Feature Status",
+                "name": "opt_network_fakenet",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable FakeNet to simulate network responses. By default, this is set to \"False\"",
+                "description": "Enable simulated network services to capture network activity. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "Geo Location",
+                "name": "opt_network_geo",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "fastest",
+                  "AU",
+                  "BR",
+                  "DE",
+                  "CH",
+                  "FR",
+                  "KR",
+                  "US",
+                  "RU",
+                  "GB",
+                  "IT"
+                ],
+                "value": "fastest",
+                "tooltip": "Select the geographic region for network routing. By default, this is set to \"fastest\"",
+                "description": "Network geolocation for the sandbox environment. By default, this is set to \"fastest\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "HTTPS MITM Proxy",
+                "name": "opt_network_mitm",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable HTTPS MITM proxy for encrypted traffic analysis. By default, this is set to \"False\"",
+                "description": "Enable HTTPS interception for traffic inspection. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "Residential Proxy",
+                "name": "opt_network_residential_proxy",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable residential proxy routing. By default, this is set to \"False\"",
+                "description": "Route traffic through a residential proxy. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "Residential Proxy Geo Location",
+                "name": "opt_network_residential_proxy_geo",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "fastest",
+                  "AU",
+                  "BR",
+                  "DE",
+                  "CH",
+                  "FR",
+                  "KR",
+                  "US",
+                  "RU",
+                  "GB",
+                  "IT"
+                ],
+                "value": "fastest",
+                "tooltip": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
+                "description": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "TOR Using",
+                "name": "opt_network_tor",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable TOR network routing. By default, this is set to \"False\"",
+                "description": "Route network traffic through the TOR network. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              },
+              {
+                "title": "Privacy Setting",
+                "name": "opt_privacy_type",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "public",
+                  "bylink",
+                  "owner",
+                  "byteam"
+                ],
+                "value": "bylink",
+                "tooltip": "Define who can access the analysis results. By default, this is set to \"bylink\"",
+                "description": "Visibility level of the analysis (public, by link, owner-only, or team-only). By default, this is set to \"bylink\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Windows"
+              }
+            ],
+            "Linux": [
+              {
+                "title": "Timeout",
+                "name": "opt_timeout",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "text",
+                "value": "120",
+                "tooltip": "Specify the duration of the analysis in seconds. By default, this is set to \"120\"",
+                "description": "Specify how long the analysis should run. By default, this is set to \"120\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "Environment",
+                "name": "env_os",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "ubuntu",
+                  "debian"
+                ],
+                "value": "ubuntu",
+                "tooltip": "Select the operating system for the sandbox. By default, this is set to \"ubuntu\"",
+                "description": "Select the operating system for the sandbox. By default, this is set to \"ubuntu\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "Browser",
+                "name": "obj_ext_browser",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "Google Chrome",
+                  "Mozilla Firefox"
+                ],
+                "value": "Google Chrome",
+                "tooltip": "Select the browser to use. By default, this is set to \"Google Chrome\"",
+                "description": "Select the browser to use. By default, this is set to \"Google Chrome\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "Extension to Use",
+                "name": "obj_ext_extension",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": true,
+                "tooltip": "Select the extension to use. By default, this is set to \"True\"",
+                "description": "Select the extension to use. By default, this is set to \"True\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "Network Connection State",
+                "name": "opt_network_connect",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": true,
+                "tooltip": "Toggle network access for the sandbox session. By default, this is set to \"True\"",
+                "description": "Enable or disable internet connectivity during analysis. By default, this is set to \"True\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "FakeNet Feature Status",
+                "name": "opt_network_fakenet",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable FakeNet to simulate network responses. By default, this is set to \"False\"",
+                "description": "Enable simulated network services to capture network activity. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "Geo Location",
+                "name": "opt_network_geo",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "fastest",
+                  "AU",
+                  "BR",
+                  "DE",
+                  "CH",
+                  "FR",
+                  "KR",
+                  "US",
+                  "RU",
+                  "GB",
+                  "IT"
+                ],
+                "value": "fastest",
+                "tooltip": "Select the geographic region for network routing. By default, this is set to \"fastest\"",
+                "description": "Network geolocation for the sandbox environment. By default, this is set to \"fastest\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "HTTPS MITM Proxy",
+                "name": "opt_network_mitm",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable HTTPS MITM proxy for encrypted traffic analysis. By default, this is set to \"False\"",
+                "description": "Enable HTTPS interception for traffic inspection. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "Residential Proxy",
+                "name": "opt_network_residential_proxy",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable residential proxy routing. By default, this is set to \"False\"",
+                "description": "Route traffic through a residential proxy. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "Residential Proxy Geo Location",
+                "name": "opt_network_residential_proxy_geo",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "fastest",
+                  "AU",
+                  "BR",
+                  "DE",
+                  "CH",
+                  "FR",
+                  "KR",
+                  "US",
+                  "RU",
+                  "GB",
+                  "IT"
+                ],
+                "value": "fastest",
+                "tooltip": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
+                "description": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "TOR Using",
+                "name": "opt_network_tor",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable TOR network routing. By default, this is set to \"False\"",
+                "description": "Route network traffic through the TOR network. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              },
+              {
+                "title": "Privacy Setting",
+                "name": "opt_privacy_type",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "public",
+                  "bylink",
+                  "owner",
+                  "byteam"
+                ],
+                "value": "bylink",
+                "tooltip": "Define who can access the analysis results. By default, this is set to \"bylink\"",
+                "description": "Visibility level of the analysis (public, by link, owner-only, or team-only). By default, this is set to \"bylink\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Linux"
+              }
+            ],
+            "Android": [
+              {
+                "title": "Timeout",
+                "name": "opt_timeout",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "text",
+                "value": "120",
+                "tooltip": "Specify the duration of the analysis in seconds. By default, this is set to \"120\"",
+                "description": "Specify how long the analysis should run. By default, this is set to \"120\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              },
+              {
+                "title": "Locale",
+                "name": "env_locale",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "text",
+                "value": "en-US",
+                "tooltip": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
+                "description": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              },
+              {
+                "title": "Network Connection State",
+                "name": "opt_network_connect",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": true,
+                "tooltip": "Toggle network access for the sandbox session. By default, this is set to \"True\"",
+                "description": "Enable or disable internet connectivity during analysis. By default, this is set to \"True\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              },
+              {
+                "title": "FakeNet Feature Status",
+                "name": "opt_network_fakenet",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable FakeNet to simulate network responses. By default, this is set to \"False\"",
+                "description": "Enable simulated network services to capture network activity. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              },
+              {
+                "title": "Geo Location",
+                "name": "opt_network_geo",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "fastest",
+                  "AU",
+                  "BR",
+                  "DE",
+                  "CH",
+                  "FR",
+                  "KR",
+                  "US",
+                  "RU",
+                  "GB",
+                  "IT"
+                ],
+                "value": "fastest",
+                "tooltip": "Select the geographic region for network routing. By default, this is set to \"fastest\"",
+                "description": "Network geolocation for the sandbox environment. By default, this is set to \"fastest\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              },
+              {
+                "title": "HTTPS MITM Proxy",
+                "name": "opt_network_mitm",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable HTTPS MITM proxy for encrypted traffic analysis. By default, this is set to \"False\"",
+                "description": "Enable HTTPS interception for traffic inspection. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              },
+              {
+                "title": "Residential Proxy",
+                "name": "opt_network_residential_proxy",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable residential proxy routing. By default, this is set to \"False\"",
+                "description": "Route traffic through a residential proxy. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              },
+              {
+                "title": "Residential Proxy Geo Location",
+                "name": "opt_network_residential_proxy_geo",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "fastest",
+                  "AU",
+                  "BR",
+                  "DE",
+                  "CH",
+                  "FR",
+                  "KR",
+                  "US",
+                  "RU",
+                  "GB",
+                  "IT"
+                ],
+                "value": "fastest",
+                "tooltip": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
+                "description": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              },
+              {
+                "title": "TOR Using",
+                "name": "opt_network_tor",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "checkbox",
+                "value": false,
+                "tooltip": "Enable TOR network routing. By default, this is set to \"False\"",
+                "description": "Route network traffic through the TOR network. By default, this is set to \"False\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              },
+              {
+                "title": "Privacy Setting",
+                "name": "opt_privacy_type",
+                "visible": true,
+                "required": false,
+                "editable": true,
+                "type": "select",
+                "options": [
+                  "public",
+                  "bylink",
+                  "owner",
+                  "byteam"
+                ],
+                "value": "bylink",
+                "tooltip": "Define who can access the analysis results. By default, this is set to \"bylink\"",
+                "description": "Visibility level of the analysis (public, by link, owner-only, or team-only). By default, this is set to \"bylink\"",
+                "isOnChange": true,
+                "onChangeParam": "Operation system",
+                "onChangeOption": "Android"
+              }
+            ]
+          }
+        }
+      ],
+      "open": false,
+      "output_schema": {
+        "error": "",
+        "data": {
+          "task_uuid": ""
+        }
+      }
+    },
+    {
+      "operation": "get_analysis_verdict",
+      "title": "Get Analysis Verdict",
+      "description": "Retrieve the verdict and current status of an analysis from ANY.RUN Cloud Sandbox based on the analysis ID.",
+      "category": "investigation",
+      "annotation": "get_analysis_verdict",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Analysis ID",
+          "description": "Specify the UUID of the analysis task in ANY.RUN Cloud Sandbox.",
+          "type": "text",
+          "name": "task_uuid",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Specify the UUID of the analysis task in ANY.RUN Cloud Sandbox."
+        }
+      ],
+      "open": false,
+      "output_schema": {
+        "error": "",
+        "data": {
+          "verdict": "",
+          "status": ""
+        }
+      }
+    },
+    {
+      "operation": "get_report",
+      "title": "Get Report",
+      "description": "Retrieve an analysis report from ANY.RUN Cloud Sandbox using the specified Analysis ID. The Analysis ID (task UUID) is generated automatically when a new analysis is submitted.",
+      "category": "investigation",
+      "annotation": "get_report",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Analysis ID",
+          "description": "Specify the UUID of the task whose report you want to retrieve from ANY.RUN. A Task ID is generated from an analysis submitted to ANY.RUN.",
+          "type": "text",
+          "name": "task_uuid",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Specify the UUID of the task whose report you want to retrieve from ANY.RUN. A Task ID is generated from an analysis submitted to ANY.RUN."
+        },
+        {
+          "title": "Report Type",
+          "description": "Specify the type of report to retrieve. Possible values are Summary, IOC, STIX, MISP, or HTML.Default value: \"Summary\".",
+          "type": "select",
+          "name": "report_type",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "value": "Summary",
+          "tooltip": "Specify the type of report to retrieve. Possible values are Summary, IOC, STIX, MISP, or HTML.Default value: \"Summary\".",
+          "options": [
+            "Summary",
+            "IOC",
+            "STIX",
+            "MISP",
+            "HTML"
+          ]
+        }
+      ],
+      "open": false,
+      "conditional_output_schema": [
+        {
+          "condition": "{{report_type === 'Summary'}}",
+          "output_schema": {
+            "data": {
+              "mitre": [
+                {
+                  "id": "",
+                  "name": "",
+                  "phases": [
+                  ]
+                }
+              ],
+              "status": "",
+              "malconf": [],
+              "network": {
+                "threats": [],
+                "connections": [
+                  {
+                    "ip": "",
+                    "asn": "",
+                    "port": "",
+                    "time": "",
+                    "country": "",
+                    "process": "",
+                    "protocol": "",
+                    "reputation": "",
+                    "tlsFingerprint": {
+                      "ja3": "",
+                      "ja3S": "",
+                      "jarm": "",
+                      "ja3Fullstring": "",
+                      "ja3SFullstring": ""
+                    }
+                  }
+                ],
+                "dnsRequests": [
+                  {
+                    "ips": [
+                    ],
+                    "time": "",
+                    "domain": "",
+                    "reputation": "",
+                    "reputationNumber": ""
+                  }
+                ],
+                "httpRequests": [
+                  {
+                    "ip": "",
+                    "url": "",
+                    "body": {
+                      "request": {
+                        "size": "",
+                        "type": "",
+                        "threatLevel": ""
+                      },
+                      "response": {
+                        "size": "",
+                        "type": "",
+                        "threatLevel": ""
+                      }
+                    },
+                    "host": "",
+                    "port": "",
+                    "time": "",
+                    "method": "",
+                    "status": "",
+                    "country": "",
+                    "process": "",
+                    "httpCode": "",
+                    "reputation": "",
+                    "proxyDetected": ""
+                  }
+                ]
+              },
+              "analysis": {
+                "tags": [],
+                "uuid": "",
+                "scores": {
+                  "specs": {
+                    "multiprocessing": ""
+                  },
+                  "verdict": {
+                    "score": "",
+                    "threatLevel": "",
+                    "threatLevelText": ""
+                  }
+                },
+                "content": {
+                  "pcap": {
+                    "present": "",
+                    "permanentUrl": ""
+                  },
+                  "dumps": [],
+                  "video": {
+                    "present": "",
+                    "permanentUrl": ""
+                  },
+                  "sslkeys": {
+                    "present": ""
+                  },
+                  "mainObject": {
+                    "url": "",
+                    "type": "",
+                    "hashes": {
+                      "md5": "",
+                      "sha1": "",
+                      "sha256": "",
+                      "ssdeep": ""
+                    }
+                  },
+                  "screenshots": [
+                    {
+                      "time": "",
+                      "uuid": "",
+                      "permanentUrl": "",
+                      "thumbnailUrl": ""
+                    }
+                  ]
+                },
+                "options": {
+                  "tor": {
+                    "geo": "",
+                    "used": ""
+                  },
+                  "mitm": "",
+                  "video": "",
+                  "fakeNet": "",
+                  "network": "",
+                  "privacy": "",
+                  "timeout": "",
+                  "hideSource": "",
+                  "heavyEvasion": "",
+                  "presentation": "",
+                  "privateSample": "",
+                  "additionalTime": "",
+                  "automatization": {
+                    "uac": "",
+                    "interactivity": ""
+                  }
+                },
+                "reports": {
+                  "IOC": "",
+                  "HTML": "",
+                  "MISP": "",
+                  "STIX": "",
+                  "graph": ""
+                },
+                "sandbox": {
+                  "name": "",
+                  "plan": {
+                    "name": ""
+                  }
+                },
+                "creation": "",
+                "duration": "",
+                "stopExec": "",
+                "creationText": "",
+                "permanentUrl": "",
+                "stopExecText": ""
+              },
+              "counters": {
+                "files": {
+                  "text": "",
+                  "unknown": "",
+                  "malicious": "",
+                  "suspicious": ""
+                },
+                "network": {
+                  "dns": "",
+                  "http": "",
+                  "threats": "",
+                  "connections": ""
+                },
+                "registry": {
+                  "read": "",
+                  "total": "",
+                  "write": "",
+                  "delete": ""
+                },
+                "processes": {
+                  "total": "",
+                  "malicious": "",
+                  "monitored": "",
+                  "suspicious": ""
+                },
+                "synchronization": {
+                  "type": {
+                    "event": "",
+                    "mutex": ""
+                  },
+                  "total": "",
+                  "operation": {
+                    "open": "",
+                    "create": ""
+                  }
+                }
+              },
+              "modified": {
+                "files": [
+                  {
+                    "size": "",
+                    "time": "",
+                    "type": "",
+                    "hashes": {
+                      "md5": "",
+                      "sha1": "",
+                      "sha256": "",
+                      "ssdeep": ""
+                    },
+                    "process": "",
+                    "filename": "",
+                    "threatLevel": "",
+                    "permanentUrl": ""
+                  }
+                ],
+                "registry": []
+              },
+              "incidents": [
+                {
+                  "desc": "",
+                  "count": "",
+                  "mitre": [
+                    {
+                      "v": "",
+                      "sid": "",
+                      "tid": ""
+                    }
+                  ],
+                  "title": "",
+                  "events": [
+                    {
+                      "_id": "",
+                      "key": "",
+                      "name": "",
+                      "time": "",
+                      "value": "",
+                      "operation": "",
+                      "typeValue": ""
+                    }
+                  ],
+                  "source": "",
+                  "process": "",
+                  "firstSeen": "",
+                  "signatureId": "",
+                  "threatLevel": ""
+                }
+              ],
+              "processes": [
+                {
+                  "pid": "",
+                  "cert": {
+                    "SN": "",
+                    "status": "",
+                    "sourceName": "",
+                    "thumbprint": "",
+                    "contentHash": ""
+                  },
+                  "ppid": "",
+                  "uuid": "",
+                  "image": "",
+                  "times": {},
+                  "scores": {
+                    "type": "",
+                    "specs": {
+                      "network": ""
+                    },
+                    "dropped": "",
+                    "verdict": {
+                      "score": "",
+                      "threatLevel": "",
+                      "threatLevelText": ""
+                    },
+                    "injected": "",
+                    "loadsSusp": ""
+                  },
+                  "status": "",
+                  "context": {
+                    "userName": "",
+                    "rebootNumber": "",
+                    "integrityLevel": ""
+                  },
+                  "modules": [],
+                  "fileName": "",
+                  "fileType": "",
+                  "important": "",
+                  "parentUUID": "",
+                  "commandLine": "",
+                  "mainProcess": "",
+                  "versionInfo": {
+                    "company": "",
+                    "version": "",
+                    "description": ""
+                  },
+                  "synchronization": [],
+                  "hasMalwareConfig": ""
+                }
+              ],
+              "debugStrings": [],
+              "environments": {
+                "os": {
+                  "build": "",
+                  "major": "",
+                  "title": "",
+                  "bitness": "",
+                  "product": "",
+                  "softSet": "",
+                  "variant": "",
+                  "productType": "",
+                  "servicePack": ""
+                },
+                "hotfixes": [
+                  {
+                    "title": ""
+                  }
+                ],
+                "software": [
+                  {
+                    "title": "",
+                    "version": ""
+                  }
+                ],
+                "internetExplorer": {
+                  "kbnum": "",
+                  "version": ""
+                }
+              }
+            },
+            "error": ""
+          }
+        },
+        {
+          "condition": "{{report_type === 'IOC'}}",
+          "output_schema": [
+            {
+              "ioc": "",
+              "name": "",
+              "type": "",
+              "category": "",
+              "reputation": "",
+              "discoveringEntryId": ""
+            }
+          ]
+        },
+        {
+          "condition": "{{report_type === 'STIX'}}",
+          "output_schema": {
+            "id": "",
+            "type": "",
+            "objects": [
+              {
+                "id": "",
+                "name": "",
+                "type": "",
+                "created": "",
+                "modified": "",
+                "description": "",
+                "spec_version": "",
+                "identity_class": "",
+                "contact_information": "",
+                "external_references": [
+                  {
+                    "url": "",
+                    "hashes": {
+                      "SHA-256": ""
+                    },
+                    "external_id": "",
+                    "source_name": ""
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "condition": "{{report_type === 'MISP'}}",
+          "output_schema": {
+            "Event": {
+              "Orgc": {
+                "name": "",
+                "uuid": ""
+              },
+              "date": "",
+              "info": "",
+              "uuid": "",
+              "analysis": "",
+              "Attribute": [
+                {
+                  "type": "",
+                  "value": "",
+                  "category": "",
+                  "distribution": ""
+                }
+              ],
+              "timestamp": "",
+              "distribution": "",
+              "threat_level_id": ""
+            }
+          }
+        },
+        {
+          "condition": "{{report_type === 'HTML'}}",
+          "output_schema": {
+            "data": ""
+          }
+        }
+      ]
+    },
+    {
+      "operation": "get_report_attachments",
+      "title": "Get Report Attachments",
+      "description": "Retrieve the analysis report from ANY.RUN Sandbox as attachment in JSON, HTML format using the provided Analysis ID. This ID is automatically generated when a new analysis is submitted.",
+      "category": "investigation",
+      "annotation": "get_report_attachments",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Analysis ID",
+          "description": "UUID of that task whose report you want to retrieve from ANY.RUN. Task ID is generated from an analysis submitted to ANY.RUN.Specify the UUID of the task whose report attachments such as the HTML report, screenshot, execution video, MISP record, etc. you want to retrieve from ANY.RUN. Note: A Task ID is generated from an analysis submitted to ANY.RUN.",
+          "type": "text",
+          "name": "task_uuid",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "UUID of that task whose report you want to retrieve from ANY.RUN. Task ID is generated from an analysis submitted to ANY.RUN.Specify the UUID of the task whose report attachments such as the HTML report, screenshot, execution video, MISP record, etc. you want to retrieve from ANY.RUN."
+        },
+        {
+          "title": "Report Type",
+          "description": "Specify the type of report to retrieve. Possible values are Summary, IOC, STIX, MISP, or HTML.Default value: \"Summary\".",
+          "type": "select",
+          "name": "report_type",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "value": "Summary",
+          "tooltip": "Specify the type of report to retrieve. Possible values are Summary, IOC, STIX, MISP, or HTML.Default value: \"Summary\".",
+          "options": [
+            "Summary",
+            "IOC",
+            "STIX",
+            "MISP",
+            "HTML"
+          ]
+        }
+      ],
+      "open": false,
+      "output_schema": {
+        "data": ""
+      }
+    },
+    {
+      "operation": "delete_analysis",
+      "title": "Delete Analysis",
+      "description": "Delete an analysis task from ANY.RUN Cloud Sandbox using the specified analysis ID.",
+      "category": "investigation",
+      "annotation": "delete_analysis",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Analysis ID",
+          "description": "Specify the UUID of the analysis task in ANY.RUN Cloud Sandbox.",
+          "type": "text",
+          "name": "task_uuid",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Specify the UUID of the analysis task in ANY.RUN Cloud Sandbox."
+        }
+      ],
+      "open": false,
+      "output_schema": {
+      }
+    }
+  ]
 }
