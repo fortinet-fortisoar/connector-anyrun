@@ -1,3 +1,10 @@
+"""
+Copyright start
+MIT License
+Copyright (c) 2026 Fortinet Inc
+Copyright end
+"""
+
 from anyrun.connectors import SandboxConnector
 from anyrun.connectors.sandbox.operation_systems import (
     AndroidConnector,
