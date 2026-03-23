@@ -8,20 +8,20 @@
   "cs_approved": false,
   "cs_compatible": true,
   "category": "Malware Analysis",
-  "help_online": "",
+  "help_online": "https://docs.fortinet.com/document/fortisoar/2.0.0/any-run-cloud-sandbox/200/any-run-cloud-sandbox-v2-0-0",
   "icon_small_name": "small.png",
   "icon_large_name": "large.png",
   "configuration": {
     "fields": [
       {
         "title": "API Key",
-        "description": "API Key of the ANY.RUN endpoint server to connect and perform the automated operations.",
+        "description": "API Key of the ANY.RUN Cloud Sandbox endpoint server to connect and perform the automated operations.",
         "type": "password",
         "name": "api_key",
         "required": true,
         "visible": true,
         "editable": true,
-        "tooltip": "API Key of the ANY.RUN endpoint server to connect and perform the automated operations."
+        "tooltip": "API Key of the ANY.RUN Cloud Sandbox endpoint server to connect and perform the automated operations."
       },
       {
         "title": "Verify SSL",
@@ -39,8 +39,8 @@
   "operations": [
     {
       "operation": "get_user_limits",
-      "title": "Get User Limits",
-      "description": "Retrieves the request limits of the authenticated user, according to the subscribed plan, from ANY.RUN.",
+      "title": "Retrieve Account Usage Limits",
+      "description": "Retrieve the request limits for the authenticated user based on the subscribed ANY.RUN Cloud Sandbox plan.",
       "category": "investigation",
       "annotation": "get_user_limits",
       "enabled": true,
@@ -73,42 +73,42 @@
     },
     {
       "operation": "get_user_history",
-      "title": "Get History",
-      "description": "Retrieve analysis history from ANY.RUN Cloud Sandbox based on the specified parameters.",
+      "title": "Retrieve Analysis History",
+      "description": "Retrieve the analysis history from ANY.RUN Cloud Sandbox based on the specified parameters.",
       "category": "investigation",
       "annotation": "get_user_history",
       "enabled": true,
       "parameters": [
         {
           "title": "Team",
-          "description": "Select this checkbox and specify the team to retrieve that team's history. If you leave the checkbox cleared (default), then your history is retrieved.",
+          "description": "Select this checkbox and specify a team to retrieve that team's history. If you leave the checkbox cleared (default), then your history is retrieved.",
           "type": "checkbox",
           "name": "team",
           "required": false,
           "visible": true,
           "editable": true,
-          "tooltip": "Select this checkbox and specify the team to retrieve that team's history. If you leave the checkbox cleared (default), then your history is retrieved."
+          "tooltip": "Select this checkbox and specify a team to retrieve that team's history. If you leave the checkbox cleared (default), then your history is retrieved."
         },
         {
           "title": "Skip",
-          "description": "The number of results that this operation should skip. By default, this is set to \"0\".",
+          "description": "The number of results that this operation should skip. By default, this is set to 0.",
           "type": "text",
           "name": "skip",
           "required": false,
           "visible": true,
           "editable": true,
           "value": "0",
-          "tooltip": "The number of results that this operation should skip. By default, this is set to \"0\"."
+          "tooltip": "The number of results that this operation should skip. By default, this is set to 0."
         },
         {
           "title": "Limit",
-          "description": "The maximum number of items that this operation should return in a single search. By default, this is set to \"25\". You can specify any number between 1-100.",
+          "description": "The maximum number of items that this operation should return in a single search. By default, this is set to 25. You can specify any number between 1-100.",
           "type": "text",
           "name": "limit",
           "required": false,
           "visible": true,
           "editable": true,
-          "tooltip": "The maximum number of items that this operation should return in a single search. By default, this is set to \"25\". You can specify any number between 1-100."
+          "tooltip": "The maximum number of items that this operation should return in a single search. By default, this is set to 25. You can specify any number between 1-100."
         }
       ],
       "open": false,
@@ -140,7 +140,7 @@
     },
     {
       "operation": "detonate_file",
-      "title": "Detonate File",
+      "title": "Analyze File in Sandbox",
       "description": "Submit a file to ANY.RUN Cloud Sandbox for dynamic analysis using the specified attachment or indicator IRI.",
       "category": "investigation",
       "annotation": "detonate_file",
@@ -148,23 +148,23 @@
       "parameters": [
         {
           "title": "Attachment IRI",
-          "description": "Specify the IRI of the indicator or attachment to be submitted for detonation in ANY.RUN Cloud Sandbox.",
+          "description": "IRI of the indicator or attachment to submit to ANY.RUN Cloud Sandbox for analysis.",
           "type": "text",
           "name": "attachment_iri",
           "required": true,
           "visible": true,
           "editable": true,
-          "tooltip": "Specify the IRI of the indicator or attachment to be submitted for detonation in ANY.RUN Cloud Sandbox."
+          "tooltip": "IRI of the indicator or attachment to submit to ANY.RUN Cloud Sandbox for analysis."
         },
         {
           "title": "Operating System",
-          "description": "Select the operating system environment in which the file will be executed. Possible values are Windows, Linux, or Android.",
+          "description": "Operating system environment in which the file will be executed. You can choose from these options: Windows, Linux, Android.",
           "type": "select",
           "name": "operationSystem",
           "required": true,
           "visible": true,
           "editable": true,
-          "tooltip": "Select the operating system environment in which the file will be executed. Possible values are Windows, Linux, or Android.",
+          "tooltip": "Operating system environment in which the file will be executed. You can choose from these options: Windows, Linux, Android.",
           "options": [
             "Windows",
             "Linux",
@@ -180,8 +180,8 @@
                 "editable": true,
                 "type": "text",
                 "value": "240",
-                "tooltip": "Specify the duration of the analysis in seconds. By default, this is set to \"240\"",
-                "description": "Specify how long the analysis should run. By default, this is set to \"240\"",
+                "tooltip": "Duration of the analysis run. By default, this is set to \"240\"",
+                "description": "Duration of the analysis run. By default, this is set to \"240\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -198,8 +198,8 @@
                   "64"
                 ],
                 "value": "64",
-                "tooltip": "Bitness of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"64\". The allowed values are \"32\" and \"64\"",
-                "description": "Bitness of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"64\". The allowed values are \"32\" and \"64\"",
+                "tooltip": "Operating system architecture used for analysis. By default, this is set to \"64\". The allowed values are \"32\" and \"64\"",
+                "description": "Operating system architecture used for analysis. By default, this is set to \"64\". The allowed values are \"32\" and \"64\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -212,8 +212,8 @@
                 "editable": true,
                 "type": "text",
                 "value": "en-US",
-                "tooltip": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
-                "description": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
+                "tooltip": "Operating system locale. By default, this is set to \"en-US\"",
+                "description": "Operating system locale. By default, this is set to \"en-US\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -231,8 +231,8 @@
                   "complete"
                 ],
                 "value": "complete",
-                "description": "Preconfigured system profile (clean, office, or complete). By default, this is set to \"complete\"",
-                "tooltip": "Select the Windows environment profile. By default, this is set to \"complete\"",
+                "description": "Preconfigured system profile. By default, this is set to \"complete\"",
+                "tooltip": "Preconfigured system profile. By default, this is set to \"complete\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -250,8 +250,8 @@
                   "'11'"
                 ],
                 "value": "'10'",
-                "description": "Windows OS version to use for analysis (7, 10, or 11). By default, this is set to \"10\"",
-                "tooltip": "Select the Windows version for the sandbox. By default, this is set to \"10\"",
+                "description": "Windows version used for analysis. By default, this is set to \"10\"",
+                "tooltip": "Windows version used for analysis. By default, this is set to \"10\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -264,7 +264,7 @@
                 "editable": true,
                 "type": "checkbox",
                 "value": false,
-                "tooltip": "Enable to execute the file with administrative privileges. By default, this is set to \"False\"",
+                "tooltip": "Run the sample with elevated privileges. By default, this is set to \"False\"",
                 "description": "Run the sample with elevated privileges. By default, this is set to \"False\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
@@ -302,7 +302,7 @@
                 "type": "text",
                 "value": "",
                 "tooltip": "Specify additional execution parameters if required.",
-                "description": "Custom command-line arguments or execution command.",
+                "description": "Custom command line arguments or execution command.",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -315,8 +315,8 @@
                 "editable": true,
                 "type": "checkbox",
                 "value": true,
-                "tooltip": "Select the extension to use. By default, this is set to \"True\"",
-                "description": "Select the extension to use. By default, this is set to \"True\"",
+                "tooltip": "Enable file extension handling during execution. By default, this is set to \"True\"",
+                "description": "Enable file extension handling during execution. By default, this is set to \"True\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -371,7 +371,7 @@
                 ],
                 "value": "fastest",
                 "tooltip": "Select the geographic region for network routing. By default, this is set to \"fastest\"",
-                "description": "Network geolocation for the sandbox environment. By default, this is set to \"fastest\"",
+                "description": "Network geolocation used by the sandbox. By default, this is set to \"fastest\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -385,7 +385,7 @@
                 "type": "checkbox",
                 "value": false,
                 "tooltip": "Enable HTTPS MITM proxy for encrypted traffic analysis. By default, this is set to \"False\"",
-                "description": "Enable HTTPS interception for traffic inspection. By default, this is set to \"False\"",
+                "description": "Enable HTTPS traffic interception. By default, this is set to \"False\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -426,7 +426,7 @@
                 ],
                 "value": "fastest",
                 "tooltip": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
-                "description": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
+                "description": "Geolocation used for the residential proxy. By default, this is set to \"fastest\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -460,7 +460,7 @@
                 ],
                 "value": "bylink",
                 "tooltip": "Define who can access the analysis results. By default, this is set to \"bylink\"",
-                "description": "Visibility level of the analysis (public, by link, owner-only, or team-only). By default, this is set to \"bylink\"",
+                "description": "Visibility level of the analysis. By default, this is set to \"bylink\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -476,7 +476,7 @@
                 "type": "text",
                 "value": "240",
                 "tooltip": "Specify the duration of the analysis in seconds. By default, this is set to \"240\"",
-                "description": "Specify how long the analysis should run. By default, this is set to \"240\"",
+                "description": "Duration of the analysis run. By default, this is set to \"240\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Linux"
@@ -490,7 +490,7 @@
                 "type": "text",
                 "value": "en-US",
                 "tooltip": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
-                "description": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
+                "description": "Operating system locale. By default, this is set to \"en-US\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Linux"
@@ -508,7 +508,7 @@
                 ],
                 "value": "ubuntu",
                 "tooltip": "Select the operating system for the sandbox. By default, this is set to \"ubuntu\"",
-                "description": "Select the operating system for the sandbox. By default, this is set to \"ubuntu\"",
+                "description": "Linux operating system used for the sandbox. By default, this is set to \"ubuntu\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Linux"
@@ -543,7 +543,7 @@
                 "type": "text",
                 "value": "",
                 "tooltip": "Specify additional execution parameters if required.",
-                "description": "Custom command-line arguments or execution command.",
+                "description": "Custom command line arguments or execution command.",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Linux"
@@ -557,7 +557,7 @@
                 "type": "checkbox",
                 "value": true,
                 "tooltip": "Select the extension to use. By default, this is set to \"True\"",
-                "description": "Select the extension to use. By default, this is set to \"True\"",
+                "description": "Enable file extension handling during execution. By default, this is set to \"True\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Linux"
@@ -612,7 +612,7 @@
                 ],
                 "value": "fastest",
                 "tooltip": "Select the geographic region for network routing. By default, this is set to \"fastest\"",
-                "description": "Network geolocation for the sandbox environment. By default, this is set to \"fastest\"",
+                "description": "Network geolocation used by the sandbox. By default, this is set to \"fastest\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Linux"
@@ -626,7 +626,7 @@
                 "type": "checkbox",
                 "value": false,
                 "tooltip": "Enable HTTPS MITM proxy for encrypted traffic analysis. By default, this is set to \"False\"",
-                "description": "Enable HTTPS interception for traffic inspection. By default, this is set to \"False\"",
+                "description": "Enable HTTPS traffic interception. By default, this is set to \"False\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Linux"
@@ -667,7 +667,7 @@
                 ],
                 "value": "fastest",
                 "tooltip": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
-                "description": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
+                "description": "Geolocation used for the residential proxy. By default, this is set to \"fastest\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Linux"
@@ -701,7 +701,7 @@
                 ],
                 "value": "bylink",
                 "tooltip": "Define who can access the analysis results. By default, this is set to \"bylink\"",
-                "description": "Visibility level of the analysis (public, by link, owner-only, or team-only). By default, this is set to \"bylink\"",
+                "description": "Visibility level of the analysis. By default, this is set to \"bylink\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Linux"
@@ -715,7 +715,7 @@
                 "type": "checkbox",
                 "value": false,
                 "tooltip": "Enabled to run as root. By default, this is set to \"False\"",
-                "description": "Enabled to run as root. By default, this is set to \"False\"",
+                "description": "Run the sample with root privileges. By default, this is set to \"False\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Linux"
@@ -731,7 +731,7 @@
                 "type": "text",
                 "value": "240",
                 "tooltip": "Specify the duration of the analysis in seconds. By default, this is set to \"240\"",
-                "description": "Specify how long the analysis should run. By default, this is set to \"240\"",
+                "description": "Duration of the analysis run. By default, this is set to \"240\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Android"
@@ -745,7 +745,7 @@
                 "type": "text",
                 "value": "en-US",
                 "tooltip": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
-                "description": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
+                "description": "Operating system locale. By default, this is set to \"en-US\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Android"
@@ -759,7 +759,7 @@
                 "type": "text",
                 "value": "",
                 "tooltip": "Specify additional execution parameters if required.",
-                "description": "Custom command-line arguments or execution command.",
+                "description": "Custom command line arguments or execution command.",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Android"
@@ -814,7 +814,7 @@
                 ],
                 "value": "fastest",
                 "tooltip": "Select the geographic region for network routing. By default, this is set to \"fastest\"",
-                "description": "Network geolocation for the sandbox environment. By default, this is set to \"fastest\"",
+                "description": "Network geolocation used by the sandbox. By default, this is set to \"fastest\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Android"
@@ -828,7 +828,7 @@
                 "type": "checkbox",
                 "value": false,
                 "tooltip": "Enable HTTPS MITM proxy for encrypted traffic analysis. By default, this is set to \"False\"",
-                "description": "Enable HTTPS interception for traffic inspection. By default, this is set to \"False\"",
+                "description": "Enable HTTPS traffic interception. By default, this is set to \"False\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Android"
@@ -869,7 +869,7 @@
                 ],
                 "value": "fastest",
                 "tooltip": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
-                "description": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
+                "description": "Geolocation used for the residential proxy. By default, this is set to \"fastest\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Android"
@@ -903,7 +903,7 @@
                 ],
                 "value": "bylink",
                 "tooltip": "Define who can access the analysis results. By default, this is set to \"bylink\"",
-                "description": "Visibility level of the analysis (public, by link, owner-only, or team-only). By default, this is set to \"bylink\"",
+                "description": "Visibility level of the analysis. By default, this is set to \"bylink\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Android"
@@ -922,25 +922,25 @@
     },
     {
       "operation": "detonate_url",
-      "title": "Detonate URL",
-      "description": "Submit a URL to ANY.RUN Cloud Sandbox for dynamic analysis in the selected operating system environment based on the input parameters that you specified.",
+      "title": "Analyze URL in Sandbox",
+      "description": "Submit a URL to ANY.RUN Cloud Sandbox for dynamic analysis in the selected operating system environment.",
       "category": "investigation",
       "annotation": "detonate_url",
       "enabled": true,
       "parameters": [
         {
           "title": "URL",
-          "description": "Specify the URL to be analyzed in ANY.RUN Cloud Sandbox.",
+          "description": "URL to submit to ANY.RUN Cloud Sandbox for analysis.",
           "type": "text",
           "name": "obj_url",
           "required": true,
           "visible": true,
           "editable": true,
-          "tooltip": "Specify the URL to be analyzed in ANY.RUN Cloud Sandbox."
+          "tooltip": "URL to submit to ANY.RUN Cloud Sandbox for analysis."
         },
         {
           "title": "Operating System",
-          "description": "Select the operating system environment in which the URL will be executed. Possible values are Windows, Linux, or Android",
+          "description": "Operating system environment in which the URL will be executed. Possible values: Windows, Linux, Android. The available parameters depend on the selected operating system.",
           "type": "select",
           "name": "operationSystem",
           "required": true,
@@ -951,7 +951,7 @@
             "Linux",
             "Android"
           ],
-          "tooltip": "Select the operating system environment in which the URL will be executed. Possible values are Windows, Linux, or Android",
+          "tooltip": "Operating system environment in which the URL will be executed. Possible values: Windows, Linux, Android. The available parameters depend on the selected operating system.",
           "onchange": {
             "Windows": [
               {
@@ -963,7 +963,7 @@
                 "type": "text",
                 "value": "120",
                 "tooltip": "Specify the duration of the analysis in seconds. By default, this is set to \"120\"",
-                "description": "Specify how long the analysis should run. By default, this is set to \"120\"",
+                "description": "Duration of the analysis run. By default, this is set to \"120\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -981,7 +981,7 @@
                 ],
                 "value": "64",
                 "tooltip": "Bitness of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"64\". The allowed values are \"32\" and \"64\"",
-                "description": "Bitness of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"64\". The allowed values are \"32\" and \"64\"",
+                "description": "Operating system architecture used for analysis. By default, this is set to \"64\". The allowed values are \"32\" and \"64\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -995,7 +995,7 @@
                 "type": "text",
                 "value": "en-US",
                 "tooltip": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
-                "description": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
+                "description": "Operating system locale. By default, this is set to \"en-US\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -1014,7 +1014,7 @@
                 ],
                 "value": "complete",
                 "description": "Preconfigured system profile (clean, office, or complete). By default, this is set to \"complete\"",
-                "tooltip": "Select the Windows environment profile. By default, this is set to \"complete\"",
+                "tooltip": "Preconfigured system profile. By default, this is set to \"complete\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -1033,7 +1033,7 @@
                 ],
                 "value": "'10'",
                 "description": "Windows OS version to use for analysis (7, 10, or 11). By default, this is set to \"10\"",
-                "tooltip": "Select the Windows version for the sandbox. By default, this is set to \"10\"",
+                "tooltip": "Windows version used for analysis. By default, this is set to \"10\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -1053,7 +1053,7 @@
                 ],
                 "value": "Microsoft Edge",
                 "tooltip": "Select the browser to use. By default, this is set to \"Microsoft Edge\"",
-                "description": "Select the browser to use. By default, this is set to \"Microsoft Edge\"",
+                "description": "Browser used to open the URL during analysis. By default, this is set to \"Microsoft Edge\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -1067,7 +1067,7 @@
                 "type": "checkbox",
                 "value": true,
                 "tooltip": "Select the extension to use. By default, this is set to \"True\"",
-                "description": "Select the extension to use. By default, this is set to \"True\"",
+                "description": "Enable file extension handling during execution. By default, this is set to \"True\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -1122,7 +1122,7 @@
                 ],
                 "value": "fastest",
                 "tooltip": "Select the geographic region for network routing. By default, this is set to \"fastest\"",
-                "description": "Network geolocation for the sandbox environment. By default, this is set to \"fastest\"",
+                "description": "Network geolocation used by the sandbox. By default, this is set to \"fastest\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -1136,7 +1136,7 @@
                 "type": "checkbox",
                 "value": false,
                 "tooltip": "Enable HTTPS MITM proxy for encrypted traffic analysis. By default, this is set to \"False\"",
-                "description": "Enable HTTPS interception for traffic inspection. By default, this is set to \"False\"",
+                "description": "Enable HTTPS traffic interception. By default, this is set to \"False\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -1177,7 +1177,7 @@
                 ],
                 "value": "fastest",
                 "tooltip": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
-                "description": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
+                "description": "Geolocation used for the residential proxy. By default, this is set to \"fastest\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -1211,7 +1211,7 @@
                 ],
                 "value": "bylink",
                 "tooltip": "Define who can access the analysis results. By default, this is set to \"bylink\"",
-                "description": "Visibility level of the analysis (public, by link, owner-only, or team-only). By default, this is set to \"bylink\"",
+                "description": "Visibility level of the analysis. By default, this is set to \"bylink\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Windows"
@@ -1227,7 +1227,7 @@
                 "type": "text",
                 "value": "120",
                 "tooltip": "Specify the duration of the analysis in seconds. By default, this is set to \"120\"",
-                "description": "Specify how long the analysis should run. By default, this is set to \"120\"",
+                "description": "Duration of the analysis run. By default, this is set to \"120\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Linux"
@@ -1245,7 +1245,7 @@
                 ],
                 "value": "ubuntu",
                 "tooltip": "Select the operating system for the sandbox. By default, this is set to \"ubuntu\"",
-                "description": "Select the operating system for the sandbox. By default, this is set to \"ubuntu\"",
+                "description": "Linux operating system used for the sandbox. By default, this is set to \"ubuntu\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Linux"
@@ -1263,7 +1263,7 @@
                 ],
                 "value": "Google Chrome",
                 "tooltip": "Select the browser to use. By default, this is set to \"Google Chrome\"",
-                "description": "Select the browser to use. By default, this is set to \"Google Chrome\"",
+                "description": "Browser used to open the URL during analysis. By default, this is set to \"Google Chrome\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Linux"
@@ -1277,7 +1277,7 @@
                 "type": "checkbox",
                 "value": true,
                 "tooltip": "Select the extension to use. By default, this is set to \"True\"",
-                "description": "Select the extension to use. By default, this is set to \"True\"",
+                "description": "Enable file extension handling during execution. By default, this is set to \"True\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Linux"
@@ -1332,7 +1332,7 @@
                 ],
                 "value": "fastest",
                 "tooltip": "Select the geographic region for network routing. By default, this is set to \"fastest\"",
-                "description": "Network geolocation for the sandbox environment. By default, this is set to \"fastest\"",
+                "description": "Network geolocation used by the sandbox. By default, this is set to \"fastest\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Linux"
@@ -1346,7 +1346,7 @@
                 "type": "checkbox",
                 "value": false,
                 "tooltip": "Enable HTTPS MITM proxy for encrypted traffic analysis. By default, this is set to \"False\"",
-                "description": "Enable HTTPS interception for traffic inspection. By default, this is set to \"False\"",
+                "description": "Enable HTTPS traffic interception. By default, this is set to \"False\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Linux"
@@ -1387,7 +1387,7 @@
                 ],
                 "value": "fastest",
                 "tooltip": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
-                "description": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
+                "description": "Geolocation used for the residential proxy. By default, this is set to \"fastest\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Linux"
@@ -1421,7 +1421,7 @@
                 ],
                 "value": "bylink",
                 "tooltip": "Define who can access the analysis results. By default, this is set to \"bylink\"",
-                "description": "Visibility level of the analysis (public, by link, owner-only, or team-only). By default, this is set to \"bylink\"",
+                "description": "Visibility level of the analysis. By default, this is set to \"bylink\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Linux"
@@ -1437,7 +1437,7 @@
                 "type": "text",
                 "value": "120",
                 "tooltip": "Specify the duration of the analysis in seconds. By default, this is set to \"120\"",
-                "description": "Specify how long the analysis should run. By default, this is set to \"120\"",
+                "description": "Duration of the analysis run. By default, this is set to \"120\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Android"
@@ -1451,7 +1451,7 @@
                 "type": "text",
                 "value": "en-US",
                 "tooltip": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
-                "description": "Locale of OS on which you want to run the ANY.RUN analysis. By default, this is set to \"en-US\"",
+                "description": "Operating system locale. By default, this is set to \"en-US\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Android"
@@ -1506,7 +1506,7 @@
                 ],
                 "value": "fastest",
                 "tooltip": "Select the geographic region for network routing. By default, this is set to \"fastest\"",
-                "description": "Network geolocation for the sandbox environment. By default, this is set to \"fastest\"",
+                "description": "Network geolocation used by the sandbox. By default, this is set to \"fastest\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Android"
@@ -1520,7 +1520,7 @@
                 "type": "checkbox",
                 "value": false,
                 "tooltip": "Enable HTTPS MITM proxy for encrypted traffic analysis. By default, this is set to \"False\"",
-                "description": "Enable HTTPS interception for traffic inspection. By default, this is set to \"False\"",
+                "description": "Enable HTTPS traffic interception. By default, this is set to \"False\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Android"
@@ -1561,7 +1561,7 @@
                 ],
                 "value": "fastest",
                 "tooltip": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
-                "description": "Select the residential proxy geo location for network routing. By default, this is set to \"fastest\"",
+                "description": "Geolocation used for the residential proxy. By default, this is set to \"fastest\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Android"
@@ -1595,7 +1595,7 @@
                 ],
                 "value": "bylink",
                 "tooltip": "Define who can access the analysis results. By default, this is set to \"bylink\"",
-                "description": "Visibility level of the analysis (public, by link, owner-only, or team-only). By default, this is set to \"bylink\"",
+                "description": "Visibility level of the analysis. By default, this is set to \"bylink\"",
                 "isOnChange": true,
                 "onChangeParam": "Operation system",
                 "onChangeOption": "Android"
@@ -1614,8 +1614,8 @@
     },
     {
       "operation": "get_analysis_verdict",
-      "title": "Get Analysis Verdict",
-      "description": "Retrieve the verdict and current status of an analysis from ANY.RUN Cloud Sandbox based on the analysis ID.",
+      "title": "Retrieve Analysis Verdict",
+      "description": "Retrieve the verdict and current status of an analysis from ANY.RUN Cloud Sandbox using the specified Analysis ID.",
       "category": "investigation",
       "annotation": "get_analysis_verdict",
       "enabled": true,
@@ -1642,32 +1642,32 @@
     },
     {
       "operation": "get_report",
-      "title": "Get Report",
-      "description": "Retrieve an analysis report from ANY.RUN Cloud Sandbox using the specified Analysis ID. The Analysis ID (task UUID) is generated automatically when a new analysis is submitted.",
+      "title": "Retrieve Analysis Report",
+      "description": "Retrieve an analysis report from ANY.RUN Cloud Sandbox using the specified Analysis ID. The Analysis ID is generated when a new analysis is submitted.",
       "category": "investigation",
       "annotation": "get_report",
       "enabled": true,
       "parameters": [
         {
           "title": "Analysis ID",
-          "description": "Specify the UUID of the task whose report you want to retrieve from ANY.RUN. A Task ID is generated from an analysis submitted to ANY.RUN.",
+          "description": "Specify the UUID of the task whose report you want to retrieve from ANY.RUN Cloud Sandbox.",
           "type": "text",
           "name": "task_uuid",
           "required": true,
           "visible": true,
           "editable": true,
-          "tooltip": "Specify the UUID of the task whose report you want to retrieve from ANY.RUN. A Task ID is generated from an analysis submitted to ANY.RUN."
+          "tooltip": "Specify the UUID of the task whose report you want to retrieve from ANY.RUN Cloud Sandbox. A Task ID is generated from an analysis submitted to ANY.RUN."
         },
         {
           "title": "Report Type",
-          "description": "Specify the type of report to retrieve. Possible values are Summary, IOC, STIX, MISP, or HTML.Default value: \"Summary\".",
+          "description": "(Optional) Select a report type to retrieve. You can select one of the following: Summary, IOC, STIX, MISP, or HTML. Default value is Summary.",
           "type": "select",
           "name": "report_type",
           "required": false,
           "visible": true,
           "editable": true,
           "value": "Summary",
-          "tooltip": "Specify the type of report to retrieve. Possible values are Summary, IOC, STIX, MISP, or HTML.Default value: \"Summary\".",
+          "tooltip": "Select a report type to retrieve. You can select one of the following: Summary, IOC, STIX, MISP, or HTML. Default value is Summary.",
           "options": [
             "Summary",
             "IOC",
@@ -2088,32 +2088,32 @@
     },
     {
       "operation": "get_report_attachments",
-      "title": "Get Report Attachments",
-      "description": "Retrieve the analysis report from ANY.RUN Sandbox as attachment in JSON, HTML format using the provided Analysis ID. This ID is automatically generated when a new analysis is submitted.",
+      "title": "Retrieve Report Attachments",
+      "description": "Retrieve the analysis report from ANY.RUN Cloud Sandbox as an attachment in JSON or HTML format using the specified Analysis ID.",
       "category": "investigation",
       "annotation": "get_report_attachments",
       "enabled": true,
       "parameters": [
         {
           "title": "Analysis ID",
-          "description": "UUID of that task whose report you want to retrieve from ANY.RUN. Task ID is generated from an analysis submitted to ANY.RUN.Specify the UUID of the task whose report attachments such as the HTML report, screenshot, execution video, MISP record, etc. you want to retrieve from ANY.RUN. Note: A Task ID is generated from an analysis submitted to ANY.RUN.",
+          "description": "Specify the UUID of the task whose report attachments such as the HTML report, screenshot, execution video, MISP record, etc. you want to retrieve from ANY.RUN.",
           "type": "text",
           "name": "task_uuid",
           "required": true,
           "visible": true,
           "editable": true,
-          "tooltip": "UUID of that task whose report you want to retrieve from ANY.RUN. Task ID is generated from an analysis submitted to ANY.RUN.Specify the UUID of the task whose report attachments such as the HTML report, screenshot, execution video, MISP record, etc. you want to retrieve from ANY.RUN."
+          "tooltip": "Specify the UUID of the task whose report attachments such as the HTML report, screenshot, execution video, MISP record, etc. you want to retrieve from ANY.RUN. Task ID is generated from an analysis submitted to ANY.RUN. etc."
         },
         {
           "title": "Report Type",
-          "description": "Specify the type of report to retrieve. Possible values are Summary, IOC, STIX, MISP, or HTML.Default value: \"Summary\".",
+          "description": "(Optional) Select a report type to retrieve. You can select one of the following: Summary, IOC, STIX, MISP, or HTML. Default value is Summary.",
           "type": "select",
           "name": "report_type",
           "required": false,
           "visible": true,
           "editable": true,
           "value": "Summary",
-          "tooltip": "Specify the type of report to retrieve. Possible values are Summary, IOC, STIX, MISP, or HTML.Default value: \"Summary\".",
+          "tooltip": "Select a report type to retrieve. You can select one of the following: Summary, IOC, STIX, MISP, or HTML. Default value is Summary.",
           "options": [
             "Summary",
             "IOC",
@@ -2130,8 +2130,8 @@
     },
     {
       "operation": "delete_analysis",
-      "title": "Delete Analysis",
-      "description": "Delete an analysis task from ANY.RUN Cloud Sandbox using the specified analysis ID.",
+      "title": "Delete Sandbox Analysis",
+      "description": "Delete an analysis task from ANY.RUN Cloud Sandbox using the specified Analysis ID.",
       "category": "investigation",
       "annotation": "delete_analysis",
       "enabled": true,
