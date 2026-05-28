@@ -3,7 +3,7 @@
   "data": [
     {
       "@type": "WorkflowCollection",
-      "name": "Sample - ANY.RUN Cloud Sandbox - 2.0.0",
+      "name": "Sample - ANY.RUN Cloud Sandbox - 2.1.0",
       "description": "Sample playbooks for \"ANY.RUN Cloud Sandbox\" connector. If you are planning to use any of the sample playbooks in your environment, ensure that you clone those playbooks and move them to a different collection, since the sample playbook collection gets deleted during connector upgrade and delete.",
       "visible": true,
       "image": null,
@@ -221,7 +221,7 @@
                   "opt_network_residential_proxy": false,
                   "opt_network_residential_proxy_geo": "fastest"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "detonate_file",
                 "operationTitle": "Detonate File",
@@ -370,7 +370,7 @@
                 "params": {
                   "task_uuid": "{{vars.steps.Detonate_File.data['task_uuid']}}"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_analysis_verdict",
                 "operationTitle": "Get Analysis Verdict",
@@ -397,7 +397,7 @@
                   "task_uuid": "{{vars.steps.Detonate_File.data['task_uuid']}}",
                   "report_type": "html"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_report_attachments",
                 "operationTitle": "Get Report Attachments",
@@ -422,7 +422,7 @@
                   "task_uuid": "{{vars.steps.Detonate_File.data['task_uuid']}}",
                   "report_type": "ioc"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_report",
                 "operationTitle": "Get Report",
@@ -445,9 +445,9 @@
                 "config": "005d6dcb-6172-4818-b6ab-14288ed9fdf7",
                 "params": {
                   "task_uuid": "{{vars.steps.Detonate_File.data['task_uuid']}}",
-                  "report_type": "summary"
+                  "report_type": "json"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_report",
                 "operationTitle": "Get Report",
@@ -1156,7 +1156,7 @@
                   "opt_network_residential_proxy": false,
                   "opt_network_residential_proxy_geo": "fastest"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "detonate_url",
                 "operationTitle": "Detonate URL",
@@ -1312,7 +1312,7 @@
                 "params": {
                   "task_uuid": "{{vars.steps.Detonate_URL.data['task_uuid']}}"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_analysis_verdict",
                 "operationTitle": "Get Analysis Verdict",
@@ -1339,7 +1339,7 @@
                   "task_uuid": "{{vars.steps.Detonate_URL.data['task_uuid']}}",
                   "report_type": "html"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_report_attachments",
                 "operationTitle": "Get Report Attachments",
@@ -1364,7 +1364,7 @@
                   "task_uuid": "{{vars.steps.Detonate_URL.data['task_uuid']}}",
                   "report_type": "ioc"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_report",
                 "operationTitle": "Get Report",
@@ -1387,9 +1387,9 @@
                 "config": "005d6dcb-6172-4818-b6ab-14288ed9fdf7",
                 "params": {
                   "task_uuid": "{{vars.steps.Detonate_URL.data['task_uuid']}}",
-                  "report_type": "summary"
+                  "report_type": "json"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_report",
                 "operationTitle": "Get Report",
@@ -1952,9 +1952,9 @@
                 "config": "943797a6-7483-4011-b692-452f28b908c9",
                 "params": {
                   "task_uuid": "e905abec-a639-421f-a945-b0bab2be096f",
-                  "report_type": "summary"
+                  "report_type": "json"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_report",
                 "operationTitle": "Get Report",
@@ -2058,9 +2058,9 @@
                 "config": "943797a6-7483-4011-b692-452f28b908c9",
                 "params": {
                   "task_uuid": "e905abec-a639-421f-a945-b0bab2be096f",
-                  "report_type": "summary"
+                  "report_type": "json"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_report_attachments",
                 "operationTitle": "Get Report Attachments",
@@ -2165,7 +2165,7 @@
                 "params": {
                   "task_uuid": "e905abec-a639-421f-a945-b0bab2be096f"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_analysis_verdict",
                 "operationTitle": "Get Analysis Verdict",
@@ -2288,7 +2288,7 @@
                   "opt_network_residential_proxy": false,
                   "opt_network_residential_proxy_geo": "fastest"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "detonate_file",
                 "operationTitle": "Detonate File",
@@ -2590,7 +2590,7 @@
                   "opt_network_residential_proxy": false,
                   "opt_network_residential_proxy_geo": "fastest"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "detonate_file",
                 "operationTitle": "Detonate File",
@@ -2739,7 +2739,7 @@
                 "params": {
                   "task_uuid": "{{vars.steps.Detonate_File.data['task_uuid']}}"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_analysis_verdict",
                 "operationTitle": "Get Analysis Verdict",
@@ -2766,7 +2766,7 @@
                   "task_uuid": "{{vars.steps.Detonate_File.data['task_uuid']}}",
                   "report_type": "html"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_report_attachments",
                 "operationTitle": "Get Report Attachments",
@@ -2791,7 +2791,7 @@
                   "task_uuid": "{{vars.steps.Detonate_File.data['task_uuid']}}",
                   "report_type": "ioc"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_report",
                 "operationTitle": "Get Report",
@@ -2814,9 +2814,9 @@
                 "config": "005d6dcb-6172-4818-b6ab-14288ed9fdf7",
                 "params": {
                   "task_uuid": "{{vars.steps.Detonate_File.data['task_uuid']}}",
-                  "report_type": "summary"
+                  "report_type": "json"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_report",
                 "operationTitle": "Get Report",
@@ -3577,7 +3577,7 @@
                   "opt_network_residential_proxy": false,
                   "opt_network_residential_proxy_geo": "fastest"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "detonate_file",
                 "operationTitle": "Detonate File",
@@ -3726,7 +3726,7 @@
                 "params": {
                   "task_uuid": "{{vars.steps.Detonate_File.data['task_uuid']}}"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_analysis_verdict",
                 "operationTitle": "Get Analysis Verdict",
@@ -3753,7 +3753,7 @@
                   "task_uuid": "{{vars.steps.Detonate_File.data['task_uuid']}}",
                   "report_type": "html"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_report_attachments",
                 "operationTitle": "Get Report Attachments",
@@ -3778,7 +3778,7 @@
                   "task_uuid": "{{vars.steps.Detonate_File.data['task_uuid']}}",
                   "report_type": "ioc"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_report",
                 "operationTitle": "Get Report",
@@ -3801,9 +3801,9 @@
                 "config": "005d6dcb-6172-4818-b6ab-14288ed9fdf7",
                 "params": {
                   "task_uuid": "{{vars.steps.Detonate_File.data['task_uuid']}}",
-                  "report_type": "summary"
+                  "report_type": "json"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_report",
                 "operationTitle": "Get Report",
@@ -4383,7 +4383,7 @@
                 "name": "ANY.RUN Cloud Sandbox",
                 "config": "943797a6-7483-4011-b692-452f28b908c9",
                 "params": [],
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_user_limits",
                 "operationTitle": "Get User Limits",
@@ -4490,7 +4490,7 @@
                   "team": "",
                   "limit": ""
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_user_history",
                 "operationTitle": "Get History",
@@ -4733,7 +4733,7 @@
                   "opt_network_residential_proxy": false,
                   "opt_network_residential_proxy_geo": "fastest"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "detonate_url",
                 "operationTitle": "Detonate URL",
@@ -4889,7 +4889,7 @@
                 "params": {
                   "task_uuid": "{{vars.steps.Detonate_URL.data['task_uuid']}}"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_analysis_verdict",
                 "operationTitle": "Get Analysis Verdict",
@@ -4916,7 +4916,7 @@
                   "task_uuid": "{{vars.steps.Detonate_URL.data['task_uuid']}}",
                   "report_type": "html"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_report_attachments",
                 "operationTitle": "Get Report Attachments",
@@ -4941,7 +4941,7 @@
                   "task_uuid": "{{vars.steps.Detonate_URL.data['task_uuid']}}",
                   "report_type": "ioc"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_report",
                 "operationTitle": "Get Report",
@@ -4964,9 +4964,9 @@
                 "config": "005d6dcb-6172-4818-b6ab-14288ed9fdf7",
                 "params": {
                   "task_uuid": "{{vars.steps.Detonate_URL.data['task_uuid']}}",
-                  "report_type": "summary"
+                  "report_type": "json"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_report",
                 "operationTitle": "Get Report",
@@ -5540,7 +5540,7 @@
                   "opt_network_residential_proxy": false,
                   "opt_network_residential_proxy_geo": "fastest"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "detonate_url",
                 "operationTitle": "Detonate URL",
@@ -5780,7 +5780,7 @@
                   "opt_network_residential_proxy": false,
                   "opt_network_residential_proxy_geo": "fastest"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "detonate_url",
                 "operationTitle": "Detonate URL",
@@ -5936,7 +5936,7 @@
                 "params": {
                   "task_uuid": "{{vars.steps.Detonate_URL.data['task_uuid']}}"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_analysis_verdict",
                 "operationTitle": "Get Analysis Verdict",
@@ -5963,7 +5963,7 @@
                   "task_uuid": "{{vars.steps.Detonate_URL.data['task_uuid']}}",
                   "report_type": "html"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_report_attachments",
                 "operationTitle": "Get Report Attachments",
@@ -5988,7 +5988,7 @@
                   "task_uuid": "{{vars.steps.Detonate_URL.data['task_uuid']}}",
                   "report_type": "ioc"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_report",
                 "operationTitle": "Get Report",
@@ -6011,9 +6011,9 @@
                 "config": "005d6dcb-6172-4818-b6ab-14288ed9fdf7",
                 "params": {
                   "task_uuid": "{{vars.steps.Detonate_URL.data['task_uuid']}}",
-                  "report_type": "summary"
+                  "report_type": "json"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "get_report",
                 "operationTitle": "Get Report",
@@ -6577,7 +6577,7 @@
                 "params": {
                   "task_uuid": "e905abec-a639-421f-a945-b0bab2be096f"
                 },
-                "version": "2.0.0",
+                "version": "2.1.0",
                 "connector": "anyrun",
                 "operation": "delete_analysis",
                 "operationTitle": "Delete Analysis",
