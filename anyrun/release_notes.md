@@ -36,5 +36,5 @@
 - Removed the following actions and playbooks:
    - Run Analysis
    - Get Available Environments
-
+- Updated detonation playbooks to improve indicator description handling, connector configuration usage, IOC enrichment coverage, and manual trigger conditions.
 

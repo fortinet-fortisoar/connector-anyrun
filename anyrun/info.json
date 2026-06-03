@@ -4,7 +4,7 @@
   "label": "ANY.RUN Cloud Sandbox",
   "description": "ANY.RUN empowers SOC teams to cut MTTD/MTTR with fast verdicts using the Interactive Sandbox. With the ANY.RUN Cloud Sandbox connector for FortiSOAR, your team achieves: <br/> \n- Faster triage: Submit files/URLs for instant analysis across Windows, Linux, Android. Get answers in seconds to catch threats that beat standard defenses and increase the detection rate by up to 36%. <br/>\n- Streamlined workflows: Retrieve reports (JSON, HTML, IOCs) directly in FortiSOAR without tool-switching. Act without delays to stop attacks before they have a chance to hurt your infrastructure.",
   "publisher": "ANY.RUN",
-  "contributor": "Semen Shalnev",
+  "contributor": "ANY.RUN",
   "cs_approved": false,
   "cs_compatible": true,
   "category": "Malware Analysis",
@@ -1687,8 +1687,7 @@
                 {
                   "id": "",
                   "name": "",
-                  "phases": [
-                  ]
+                  "phases": []
                 }
               ],
               "status": "",
@@ -1716,8 +1715,7 @@
                 ],
                 "dnsRequests": [
                   {
-                    "ips": [
-                    ],
+                    "ips": [],
                     "time": "",
                     "domain": "",
                     "reputation": "",
@@ -2148,8 +2146,9 @@
         }
       ],
       "open": false,
-      "output_schema": {
-      }
+      "output_schema": {}
     }
-  ]
+  ],
+  "system": false,
+  "vendor_version": null
 }

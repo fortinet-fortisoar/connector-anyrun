@@ -6,4 +6,4 @@ Copyright end
 """
 
 LOGGER_NAME = 'any-run-sandbox'
-VERSION = 'FortiSOAR:1.2.0'
+VERSION = 'FortiSOAR:2.1.0'
