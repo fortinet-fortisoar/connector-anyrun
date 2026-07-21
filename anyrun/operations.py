@@ -70,7 +70,7 @@ def _report_postfixer(task_uuid: str, report_type: str) -> str:
         'misp': '_misp.json',
         'ioc': '_ioc.json',
         'stix': '_stix.json',
-        'summary': '_summary.json',
+        'json': '_json.json',
     }
 
     return f'{task_uuid}_report{mapping.get(report_type, "")}'
@@ -113,7 +113,7 @@ def get_user_history(config, params: dict) -> list[dict]:
 @exceptions_handler
 def get_report(config, params: dict) -> dict:
     report_type, task_uuid, is_attachment = (
-        params.get('report_type', 'Summary').lower(),
+        params.get('report_type', 'Json').lower(),
         params.get('task_uuid'),
         params.get('is_attachment', False),
     )

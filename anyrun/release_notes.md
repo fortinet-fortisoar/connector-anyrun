@@ -1,7 +1,7 @@
-#### Following enhancements have been made to the ANY.RUN Cloud Sandbox connector in version 2.0.0:
+#### Following enhancements have been made to the ANY.RUN Cloud Sandbox connector in version 2.1.0:
 
 - Renamed the connector from `ANY.RUN` to `ANY.RUN Cloud Sandbox`.
-- Deprecated the ANY.RUN v1.1.0 connector. Use ANY.RUN Cloud Sandbox v2.0.0.
+- Deprecated the ANY.RUN v1.1.0 connector. Use ANY.RUN Cloud Sandbox v2.1.0.
 - Updated connector configuration:
   - Removed the following parameters:
     - Server Address
@@ -36,5 +36,5 @@
 - Removed the following actions and playbooks:
    - Run Analysis
    - Get Available Environments
-
+- Updated detonation playbooks to improve indicator description handling, connector configuration usage, IOC enrichment coverage, and manual trigger conditions.
 
