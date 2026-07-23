@@ -3,12 +3,12 @@
   "version": "2.1.0",
   "label": "ANY.RUN Cloud Sandbox",
   "description": "ANY.RUN empowers SOC teams to cut MTTD/MTTR with fast verdicts using the Interactive Sandbox. With the ANY.RUN Cloud Sandbox connector for FortiSOAR, your team achieves: <br/> \n- Faster triage: Submit files/URLs for instant analysis across Windows, Linux, Android. Get answers in seconds to catch threats that beat standard defenses and increase the detection rate by up to 36%. <br/>\n- Streamlined workflows: Retrieve reports (JSON, HTML, IOCs) directly in FortiSOAR without tool-switching. Act without delays to stop attacks before they have a chance to hurt your infrastructure.",
-  "publisher": "ANY.RUN",
+  "publisher": "Fortinet",
   "contributor": "ANY.RUN",
   "cs_approved": false,
   "cs_compatible": true,
   "category": "Malware Analysis",
-  "help_online": "https://docs.fortinet.com/document/fortisoar/2.1.0/any-run-cloud-sandbox/200/any-run-cloud-sandbox-v2-0-0",
+  "help_online": "",
   "icon_small_name": "small.png",
   "icon_large_name": "large.png",
   "configuration": {
@@ -1660,16 +1660,16 @@
         },
         {
           "title": "Report Type",
-          "description": "(Optional) Select a report type to retrieve. You can select one of the following: Json, IOC, STIX, MISP, or HTML. Default value is Json.",
+          "description": "(Optional) Select a report type to retrieve. You can select one of the following: JSON, IOC, STIX, MISP, or HTML. Default value is JSON.",
           "type": "select",
           "name": "report_type",
           "required": false,
           "visible": true,
           "editable": true,
           "value": "Json",
-          "tooltip": "Select a report type to retrieve. You can select one of the following: Json, IOC, STIX, MISP, or HTML. Default value is Json.",
+          "tooltip": "Select a report type to retrieve. You can select one of the following: JSON, IOC, STIX, MISP, or HTML. Default value is JSON.",
           "options": [
-            "Json",
+            "JSON",
             "IOC",
             "STIX",
             "MISP",
@@ -1680,7 +1680,7 @@
       "open": false,
       "conditional_output_schema": [
         {
-          "condition": "{{report_type === 'Json'}}",
+          "condition": "{{report_type === 'JSON'}}",
           "output_schema": {
             "data": {
               "mitre": [
@@ -2104,16 +2104,16 @@
         },
         {
           "title": "Report Type",
-          "description": "(Optional) Select a report type to retrieve. You can select one of the following: Json, IOC, STIX, MISP, or HTML. Default value is Json.",
+          "description": "(Optional) Select a report type to retrieve. You can select one of the following: JSON, IOC, STIX, MISP, or HTML. Default value is JSON.",
           "type": "select",
           "name": "report_type",
           "required": false,
           "visible": true,
           "editable": true,
-          "value": "Json",
-          "tooltip": "Select a report type to retrieve. You can select one of the following: Json, IOC, STIX, MISP, or HTML. Default value is Json.",
+          "value": "JSON",
+          "tooltip": "Select a report type to retrieve. You can select one of the following: JSON, IOC, STIX, MISP, or HTML. Default value is JSON.",
           "options": [
-            "Json",
+            "JSON",
             "IOC",
             "STIX",
             "MISP",

@@ -113,7 +113,7 @@ def get_user_history(config, params: dict) -> list[dict]:
 @exceptions_handler
 def get_report(config, params: dict) -> dict:
     report_type, task_uuid, is_attachment = (
-        params.get('report_type', 'Json').lower(),
+        params.get('report_type', 'JSON').lower(),
         params.get('task_uuid'),
         params.get('is_attachment', False),
     )
