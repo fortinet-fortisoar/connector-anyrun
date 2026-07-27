@@ -8,7 +8,7 @@
   "cs_approved": false,
   "cs_compatible": true,
   "category": "Malware Analysis",
-  "help_online": "",
+  "help_online": "https://docs.fortinet.com/document/fortisoar/2.1.0/any-run-cloud-sandbox/210/any-run-cloud-sandbox-v2-1-0",
   "icon_small_name": "small.png",
   "icon_large_name": "large.png",
   "configuration": {
@@ -1660,14 +1660,14 @@
         },
         {
           "title": "Report Type",
-          "description": "(Optional) Select a report type to retrieve. You can select one of the following: JSON, IOC, STIX, MISP, or HTML. Default value is JSON.",
+          "description": "(Optional) Select a report format to retrieve. Available options are: JSON, IOC, STIX, MISP, or HTML. The default value is JSON.",
           "type": "select",
           "name": "report_type",
           "required": false,
           "visible": true,
           "editable": true,
           "value": "Json",
-          "tooltip": "Select a report type to retrieve. You can select one of the following: JSON, IOC, STIX, MISP, or HTML. Default value is JSON.",
+          "tooltip": "Select a report format to retrieve. Available options are: JSON, IOC, STIX, MISP, or HTML. The default value is JSON.",
           "options": [
             "JSON",
             "IOC",
@@ -2104,14 +2104,14 @@
         },
         {
           "title": "Report Type",
-          "description": "(Optional) Select a report type to retrieve. You can select one of the following: JSON, IOC, STIX, MISP, or HTML. Default value is JSON.",
+          "description": "(Optional) Select a report format to retrieve. Available options are: JSON, IOC, STIX, MISP, or HTML. The default value is JSON.",
           "type": "select",
           "name": "report_type",
           "required": false,
           "visible": true,
           "editable": true,
           "value": "JSON",
-          "tooltip": "Select a report type to retrieve. You can select one of the following: JSON, IOC, STIX, MISP, or HTML. Default value is JSON.",
+          "tooltip": "Select a report format to retrieve. Available options are: JSON, IOC, STIX, MISP, or HTML. The default value is JSON.",
           "options": [
             "JSON",
             "IOC",
