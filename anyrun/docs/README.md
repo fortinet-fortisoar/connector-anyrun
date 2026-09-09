@@ -7,15 +7,19 @@ Add the ANY.RUN Cloud Sandbox connector as a step in FortiSOAR™ playbooks and 
 
 ### Version information
 
-- Connector Version: 2.1.0 
-- FortiSOAR™ Version Tested on: 7.6.4-5623 
+- Connector Version: 2.1.1 
+- FortiSOAR™ Version Tested on: 8.0.0-6034
 - Authored By: ANY.RUN 
 
-## Release Notes for version 2.1.0
+## Release Notes for version 2.1.1
 
-Following enhancements have been made to the ANY.RUN Cloud Sandbox connector in version 2.1.0: 
-- Connector: ANY.RUN 1.1.0 is deprecated. Use ANY.RUN Cloud Sandbox 2.1.0 connector instead. 
-- Playbooks: Added new playbooks. These playbooks perform File\URL analysis using Windows\Linux\Android VM and delivering fast, detailed threat insights: 
+Following enhancements have been made to the ANY.RUN Cloud Sandbox connector in version 2.1.1: 
+
+- Added consistent verdict color accents: Red for malicious Yellow for suspicious Gray for unknown/no data Green for whitelisted
+- Renamed the action button from `Click` to `Open ANY.RUN`.
+- Removed the button background for a cleaner and more consistent UI.
+- Updated the result cards mentioned ANY.RUN Cloud Sandbox playbooks to provide a more consistent and intuitive user experience.
+- Affected Playbooks:
 
   - ANY.RUN Analyze File in Windows Sandbox 
   - ANY.RUN Analyze File in Linux Sandbox 
@@ -711,7 +715,7 @@ The output contains the following populated JSON schema:
 
 ## Included playbooks
 
-The `Sample - ANY.RUN Cloud Sandbox - 2.1.0` playbook collection comes bundled with the ANY.RUN Cloud Sandbox connector. 
+The `Sample - ANY.RUN Cloud Sandbox - 2.1.1` playbook collection comes bundled with the ANY.RUN Cloud Sandbox connector. 
   - ANY.RUN Analyze File in Windows Sandbox 
   - ANY.RUN Analyze File in Linux Sandbox 
   - ANY.RUN Analyze File in Android Sandbox 
