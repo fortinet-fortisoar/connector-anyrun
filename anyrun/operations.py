@@ -7,6 +7,7 @@ Copyright end
 
 import os
 import traceback
+import aiohttp
 from anyrun import RunTimeException
 from connectors.core.connector import ConnectorError, get_logger
 from connectors.cyops_utilities.builtins import (
@@ -18,6 +19,36 @@ from .constants import LOGGER_NAME
 from .utils import get_windows_sandbox_connector, os_connector_mapping
 
 logger = get_logger(LOGGER_NAME)
+
+# ==========================================
+# ENTERPRISE PROXY INTERCEPTOR
+# ==========================================
+_original_request = aiohttp.ClientSession._request
+
+
+async def _proxy_request(self, method, url, **kwargs):
+    """
+    Intercepts aiohttp requests to dynamically inject proxy configurations
+    from the OS environment, handling strict network boundaries.
+    """
+    try:
+        # Fetch proxy from Celery environment variables
+        proxy_url = os.environ.get('HTTP_PROXY') or os.environ.get('http_proxy')
+
+        if proxy_url and 'proxy' not in kwargs:
+            logger.debug(f"Routing aiohttp request for {url} via proxy {proxy_url}")
+            kwargs['proxy'] = proxy_url
+
+    except Exception as e:
+        logger.error(f"Failed to inject proxy into aiohttp session: {str(e)}")
+
+    # Execute original request securely
+    return await _original_request(self, method, url, **kwargs)
+
+
+# Apply global override for the connector execution context
+aiohttp.ClientSession._request = _proxy_request
+# ==========================================
 
 TMP_DIR = '/tmp/'  # noqa: S108
 
@@ -51,16 +82,20 @@ def _handle_upload_file_to_cyops(filepath: str, filename: str) -> str:
     return filename
 
 
-def _handle_attachments(file_id: str) -> bytes:
-    """ Returns attachment bytes """
-    if not file_id.startswith('/modules/attachments/'):
-        file_id = '/modules/attachments/' + file_id
+def _handle_attachments(file_id: str) -> tuple:
+    """ Returns attachment bytes and the actual filename """
+    if not file_id.startswith('/modules/attachments/') and not file_id.startswith('/api/3/attachments/'):
+        file_id = '/modules/attachments/' + file_id.split('/')[-1]
 
     metadata = download_file_from_cyops(file_id)
-    file_name = metadata.get('cyops_file_path', None)
-    file_path = os.path.join(TMP_DIR, file_name)
+
+    # Extract the original uploaded filename instead of the temporary disk name
+    actual_filename = metadata.get('filename') or metadata.get('name') or 'unknown_file.bin'
+    file_name_on_disk = metadata.get('cyops_file_path', None)
+    file_path = os.path.join(TMP_DIR, file_name_on_disk)
+
     with open(file_path, 'rb') as f:
-        return f.read()
+        return f.read(), actual_filename
 
 
 def _report_postfixer(task_uuid: str, report_type: str) -> str:
@@ -157,9 +192,14 @@ def delete_analysis(config, params) -> dict:
 @exceptions_handler
 def detonate_file(config, params) -> dict:
     file_id = params.pop('attachment_iri')
-    file_content = _handle_attachments(file_id)
+
+    # Unpack both the content and the real filename
+    file_content, real_filename = _handle_attachments(file_id)
+
     params['file_content'] = file_content
-    params['filename'] = file_id.split('/')[-1]
+    # Pass the real filename to ANY.RUN
+    params['filename'] = real_filename
+
     env_os = params.pop('operationSystem').lower()
     connector = os_connector_mapping.get(env_os)
 
