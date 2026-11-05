@@ -84,8 +84,8 @@ def _handle_upload_file_to_cyops(filepath: str, filename: str) -> str:
 
 def _handle_attachments(file_id: str) -> tuple:
     """ Returns attachment bytes and the actual filename """
-    if not file_id.startswith('/modules/attachments/') and not file_id.startswith('/api/3/attachments/'):
-        file_id = '/modules/attachments/' + file_id.split('/')[-1]
+    if not file_id.startswith('/modules/attachments/'):
+        file_id = '/modules/attachments/' + file_id
 
     metadata = download_file_from_cyops(file_id)
 
